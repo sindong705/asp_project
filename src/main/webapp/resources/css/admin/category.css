@@ -1,0 +1,85 @@
+.radio{
+	display: block;
+	font-size: 15px;
+	margin-bottom: 25px;
+}
+
+#categorylist {
+	border-bottom: 1px solid #ececec;
+	display: inline-block;
+    width: 530px;
+}
+
+#categorylist table {
+	border-top: 1px solid #333333;
+	text-align: center;
+}
+
+#categorylist table th {
+	padding: 18px 0;
+	font-size: 14px;
+	font-weight: bold;
+	color: #333333;
+	background-color: #f9f9f9;
+}
+
+#categorylist table td {
+	padding: 15px 0;
+	font-size: 14px;
+	font-weight: 500;
+	color: #333;
+	line-height: 16px;
+	border-top: 1px solid #ececec;
+}
+
+#partydelete, #addBtn{
+	font-size: 12px;
+	color: white;
+    border-radius: 5px;
+    border: 0px;
+    width: 35px;
+    height: 25px;
+    background-color: #006D77;
+}
+
+#partydelete{
+	background-color: #ea0540;
+}
+
+#addCategory{
+	display: inline-block;
+	margin-left: 100px;
+	vertical-align: top;
+}
+
+#addCategory select{
+	width: 150px;
+	font-size: 13px;
+}
+
+input[type="text"]{
+	width: 350px;
+	font-size: 13px;
+}
+
+#addBtn{
+	background-color: gray;
+}
+
+form{
+    border: 1px solid #006d77;
+	background: #fff;
+	height: 190px;
+	padding: 20px;
+	margin-top: 10px;
+	margin-bottom: 80px;
+	border-radius: 20px;
+}
+
+form table{
+	font-size: 13px;
+}
+
+form table td{
+	padding: 10px;
+}

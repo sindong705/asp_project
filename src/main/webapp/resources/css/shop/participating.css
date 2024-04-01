@@ -1,0 +1,103 @@
+.title {
+    margin-top: 60px;
+    margin-bottom: 20px;
+    font-size: 22px;
+    color: #333333;
+    line-height: 32px;
+    font-weight: bold;
+}
+
+.noneparty{
+	margin-top: 60px;
+	font-size: 22px;
+	color: gray;
+	margin-left: 13px;
+}
+
+#partyinfo-container {
+	width: calc(100% + 26px);
+    margin-left: -13px;
+    font-size: 0;
+}
+
+#partyinfo{
+	border: 1px solid lightgray;
+	width: calc(25% - 26px);
+	height: 210px;
+	border-radius: 20px;
+	padding: 30px;
+	position: relative;
+	cursor: pointer;
+	display: inline-block;
+	margin: 13px;
+}
+
+#partyinfo:hover{
+	border: 1px solid #258e75;
+}
+
+#partyinfo:hover > #service{
+	color: #258e75;
+}
+
+#service{
+	font-size: 22px;
+	color: #333;
+	font-weight: 500;
+}
+
+#service img{
+	display: inline-block;
+    width: 35px;
+    vertical-align: top;
+}
+    
+#title{
+	font-size: 15px;
+	color: gray;
+	margin-bottom: 20px;
+}
+
+.ellipsis{
+	white-space: nowrap;
+  	overflow: hidden;
+  	text-overflow: ellipsis;
+  	max-width: 240px;
+}
+
+#curr-party{
+	height: 40px;
+	overflow: hidden;
+	margin-bottom: 10px;
+	margin-left: -5px;
+}
+
+.participation{
+	width: 40px; 
+	display:inline-block;
+}
+
+.non-participation{
+	width: 40px; 
+	display:inline-block;
+	filter: grayscale(100%);
+}
+
+#enddate{
+	font-size: 14px;
+	color: gray;
+	display: inline;
+}
+
+#period{
+	font-weight: bold;
+}
+
+#price{
+	font-weight: bold;
+	display: inline;
+	position: absolute;
+	right:30px;
+	font-size: 18px;
+	line-height: 18px;
+}

@@ -1,0 +1,124 @@
+@charset "UTF-8";
+
+.mg-top-minus {
+	margin-top: -50px !important;
+}
+
+.mw-800 {
+	max-width: 800px;
+	margin: 0 auto;
+}
+
+* {
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box
+}
+
+.h4 {
+	position: relative;
+	margin-top: 75px;
+	margin-bottom: 20px;
+	font-size: 30px;
+	font-weight: 400;
+	color: #43a051;
+}
+
+.form-round {
+	position: relative;
+	padding: 25px 40px;
+	border: solid 1px #ade2b7;
+	border-radius: 20px;
+	margin-top: 30px;
+}
+
+ul {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.form-list li {
+	position: relative;
+	min-height: 42px;
+	padding: 15px 0 2px 155px;
+	font-size: 20px;
+	color: #333333;
+}
+
+.form-list .subject {
+	position: absolute;
+	top: 10;
+	left: 0;
+	display: inline-block;
+	width: 160px;
+	padding: 10px 0;
+}
+
+input[type='text'] {
+	width: 230px;
+	height: 45px;
+	padding: 0 15px;
+	font-size: 14px;
+	color: #333;
+	border: solid 1px #dddddd;
+	background-color: white;
+	outline: none;
+}
+
+.form-list .inline-break {
+	display: block;
+	margin: 6px 0 6px 0;
+}
+
+.button-align.center {
+	text-align: center;
+}
+
+.button-align .button {
+	vertical-align: top;
+}
+
+.button.button-purple {
+	background-color: #43a051;
+	cursor: pointer;
+}
+
+.button-align {
+	position: relative;
+	min-height: 53px;
+	margin-top: 60px;
+}
+
+.button {
+	position: relative;
+	display: inline-block;
+	min-width: 240px;
+	height: 70px;
+	margin: 1px 0;
+	padding: 0 10px;
+	font-size: 18px;
+	color: white;
+	text-align: center;
+	line-height: 68px;
+	border: 0;
+	border-radius: 5px;
+	background-color: #cecdd4;
+	overflow: hidden;
+}
+
+.form-list .button {
+	vertical-align: middle;
+}
+
+.form-list .lightgrey {
+	margin: 6px 0 6px 0;
+	font-size: 15px;
+	line-height: 14px;
+	font-size: 20px;
+	color: red;
+}
+
+.login_warn {
+	font-size: 20px;
+}

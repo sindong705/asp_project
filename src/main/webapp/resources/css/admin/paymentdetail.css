@@ -1,0 +1,134 @@
+#category{
+	width: 130px;
+	display: inline;
+	font-size: 13px;
+}
+
+#detailSearch{
+	width: 130px;
+	display: inline;
+	font-size: 13px;
+}
+
+#searchword{
+	width: 300px;
+	font-size: 13px;
+	display: inline;
+}
+
+#search, #reset {
+	font-size: 14px;
+	border-radius: 10px;
+	width: 90px;
+	height: 32px;
+	background-color: #006D77;
+	color: white;
+	border: 0;
+}
+
+#reset{
+	background-color: #333;
+}
+
+.radio{
+	margin-bottom: 10px;
+	font-size: 15px;
+}
+
+#partylist {
+	margin-top: 30px;
+	border-top: 1px solid #333333;
+	border-bottom: 1px solid #ececec;
+}
+
+#partylist table {
+	text-align: center;
+	width : 100%;
+}
+
+#partylist table th {
+	padding: 18px 0;
+	font-size: 14px;
+	font-weight: bold;
+	color: #333333;
+	background-color: #f9f9f9;
+}
+
+#partylist table td {
+	padding: 15px 0;
+	font-size: 14px;
+	font-weight: 500;
+	color: #333;
+	line-height: 16px;
+	border-top: 1px solid #ececec;
+}
+
+#partymodify, #partydelete, #partyclose, #partyopen{
+	font-size: 12px;
+	color: white;
+    border-radius: 5px;
+    border: 0px;
+    width: 35px;
+    height: 25px;
+    background-color: #f6c23e;
+}
+
+#partyclose, #partyopen{
+	background-color: #006D77;
+}
+
+#partydelete{
+	background-color: #ea0540;
+}
+
+.cancel-btn {
+	background-color: #fff;
+    border: 1px solid red;
+    padding: 0 10px;
+    color: red;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 25px;
+    border-radius: 17px;
+    cursor: pointer;
+}
+
+/* 페이징 */
+.page-nation li{
+	list-style: none;
+}
+
+.page-wrap{
+	text-align: center;
+	font-size: 0;
+}
+.page-nation {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-top: 35px;
+}
+
+.page-nation a{
+	display: block;
+	margin: 0 3px;
+	flex: left;
+	border: 1px solid #e6e6e6;
+	border-radius: 10px;
+	width: 28px;
+	height: 28px;
+	line-height: 28px;
+	text-align: center;
+	background-color: #fff;
+	font-size: 13px;
+	color: black;
+	text-decoration: none;
+}
+.page-nation a.active{
+	background-color: #006D77;
+	color: #fff;
+}
+.page-nation a:hover{
+	background-color: #006D77;
+	color: #fff;
+}

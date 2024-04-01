@@ -1,0 +1,140 @@
+p {
+	font-size: 14px !important;
+	margin-bottom: 0 !important;
+}
+
+#service-container {
+	margin-bottom: 80px;
+	padding: 40px 50px;
+}
+
+}
+#withdraw-tab-title {
+	font-size: 25px;
+	margin-bottom: 20px;
+}
+
+#withdraw-search table {
+	text-align: center;
+	width: 100%;
+}
+
+#withdraw-search table tr {
+	border-top: 1px solid #ececec;
+}
+
+#withdraw-search table th {
+	padding: 18px 0;
+	font-size: 14px;
+	font-weight: bold;
+	color: #333333;
+	background-color: #f9f9f9;
+}
+
+#withdraw-search table td {
+	padding: 15px 0;
+	font-size: 14px;
+	font-weight: 500;
+	color: #333;
+	line-height: 16px;
+}
+
+#withdraw-search input[type='text'] {
+    width: 250px;
+    height: 38px;
+    padding: 0 15px;
+    font-size: 14px;
+    color: #333;
+    border: solid 1px #dddddd;
+    background-color: white;
+    border-radius: 5px;
+}
+
+#withdraw-search input[type="button"] {
+    margin-left: 10px;
+    padding: 0 20px;
+    min-width: 100px;
+    height: 38px;
+    font-size: 16px;
+    border: 0px;
+    background-color: #43a051;
+    color: white;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+#withdraw-search input[type="button"]:hover {
+	background-color: #FFE05C;
+}
+
+#withdraw-tab-title {
+	font-size: 25px;
+    margin-bottom: 20px;
+}
+
+#withdraw-search {
+	text-align: center;
+	margin-bottom: 30px;
+}
+
+#withdrawlist {
+	margin-top: 10px;
+	border-top: 1px solid #333333;
+	border-bottom: 1px solid #ececec;
+}
+
+#withdrawlist table {
+	text-align: center;
+	width: 100%;
+}
+
+#withdrawlist table th {
+	padding: 18px 0;
+	font-size: 14px;
+	font-weight: bold;
+	color: #333333;
+	background-color: #f9f9f9;
+}
+
+#withdrawlist table td {
+	padding: 15px 0;
+	font-size: 14px;
+	font-weight: 500;
+	color: #333;
+	line-height: 16px;
+	border-top: 1px solid #ececec;
+}
+
+#partymodify, #partydelete {
+	font-size: 13px;
+}
+
+#withdrawCheckA {
+	border-top: 1px solid #333333;
+	margin-right: 40px;
+	display: inline-block;
+	width: calc(50% - 22px);
+	vertical-align: top;
+}
+
+#withdrawCheckB {
+	border-top: 1px solid #333333;
+	display: inline-block;
+	width: calc(50% - 22px);
+	vertical-align: top;
+}
+
+#center1 {
+	text-align: center;
+	color: #fff;
+	font-size: 16px;
+}
+
+#center1 b {
+	color: #ffff00;
+}
+
+#center2 {
+	text-align: left;
+    padding: 15px 20px !important;
+}

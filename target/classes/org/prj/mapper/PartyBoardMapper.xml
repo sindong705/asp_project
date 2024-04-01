@@ -1,0 +1,350 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.prj.mapper.PartyBoardMapper">
+
+	<!-- 파티 등록 -->
+	<insert id="registerParty" parameterType="org.prj.domain.PartyBoardVO">
+		insert into party_board
+		values(to_number(TO_CHAR(SYSDATE, 'YYYYMMDD') || seq_party.nextval), #{m_idx}, 
+		#{codeone}, #{codetwo}, #{title}, #{name}, #{nickname}, #{id}, #{party_num}, #{share_id}, #{share_pw}, #{phone},
+		#{start_date}, #{end_date}, #{price}, #{rule, jdbcType=VARCHAR}, #{comment}, 'Y', sysdate, sysdate, 0)
+	</insert>
+	
+	<!-- 내 파티(파티관리) 검색결과 게시글 수 카운트 -->
+	<select id="getManageSearchTotal" parameterType="org.prj.domain.Criteria" resultType="int">
+		select count(*)
+		from party_board
+		where m_idx=#{m_idx}
+		<if test='codeone != null and codeone != ""'>
+			and codeone=#{codeone}
+		</if>
+		<if test='codetwo != null and codetwo != ""'>
+			and codetwo=#{codetwo}
+		</if>
+		<if test='searchword != null or searchword != ""'>
+			<choose>
+		        <when test='searchcolumn.equals("p_idx")'>
+		            and p_idx LIKE '%' || #{searchword} || '%'
+		        </when>
+		        <when test='searchcolumn.equals("title")'>
+		            and LOWER(title) LIKE '%' || #{searchword} || '%'
+		        </when>
+		    </choose>
+		</if>
+	</select>
+	
+	<!-- 내 파티(파티관리)검색결과 리스트 -->
+	<select id="getManageSearchList" parameterType="org.prj.domain.Criteria" resultType="org.prj.domain.PartyBoardVO">
+		select * from
+		(select rownum rn, p_idx, m_idx, codeone, codetwo, title, "NAME", nickname, id, party_num
+			, share_id, share_pw, phone, start_date, end_date, price, "RULE", "COMMENT", status
+			, reg_date, update_date, curr_party, c_primary, c_secondary, trunc(end_date)-trunc(sysdate) as datediff, 
+		 	((trunc(end_date)-trunc(sysdate)) * price) as totalprice
+	 	from
+			(select p.p_idx, p.m_idx, p.codeone, p.codetwo, p.title, p."NAME", p.nickname, p.id, p.party_num
+			, p.share_id, p.share_pw, p.phone, p.start_date, p.end_date, p.price, p."RULE", p."COMMENT", p.status
+			, p.reg_date, p.update_date, p.curr_party, c.c_primary, c.c_secondary, trunc(end_date)-trunc(sysdate) as datediff, 
+		 	((trunc(end_date)-trunc(sysdate)) * price) as totalprice
+			from party_board p inner join category c 
+			on p.codeone=c.codeone and p.codetwo=c.codetwo
+			where p.m_idx=#{m_idx} 
+			<if test='codeone != null and codeone != ""'>
+				and p.codeone=#{codeone}
+			</if>
+			<if test='codetwo != null and codetwo != ""'>
+				and p.codetwo=#{codetwo}
+			</if>
+			<if test='searchword != null or searchword != ""'>
+				<choose>
+			        <when test='searchcolumn.equals("p_idx")'>
+			            and p.p_idx LIKE '%' || #{searchword} || '%'
+			        </when>
+			        <when test='searchcolumn.equals("title")'>
+			            and LOWER(p.title) LIKE '%' || #{searchword} || '%'
+			        </when>
+			    </choose>
+			</if>
+			<if test='sort.equals("latest")'>
+			order by p.p_idx desc
+ 			</if>
+ 			<if test='sort.equals("period")'>
+			order by (trunc(end_date)-trunc(sysdate)) desc
+ 			</if>)
+ 		<![CDATA[	
+		where rownum <= #{pageNum} * #{amount})
+		where rn > (#{pageNum}-1) * #{amount}
+		]]>
+	</select>
+	
+	<!-- 파티 수정 페이지 -->
+	<select id="getParty" parameterType="int" resultType="org.prj.domain.PartyBoardVO">
+		select p.p_idx, p.m_idx, p.codeone, p.codetwo, p.title, p."NAME", p.nickname, p.id, p.party_num
+		, p.share_id, p.share_pw, p.phone, p.start_date, p.end_date, p.price, p."RULE", p."COMMENT", p.status
+		, p.reg_date, p.update_date, p.curr_party, c.c_primary, c.c_secondary, trunc(end_date)-trunc(sysdate) as datediff, 
+	 	((trunc(end_date)-trunc(sysdate)) * price) as totalprice
+		from party_board p inner join category c 
+		on p.codeone=c.codeone and p.codetwo=c.codetwo
+		where p_idx=#{p_idx}
+	</select>
+	
+	<!-- 파티 수정 -->
+	<update id="updateParty" parameterType="org.prj.domain.PartyBoardVO">
+		update party_board 
+		set title=#{title}, share_id=#{share_id}, share_pw=#{share_pw}, phone=#{phone}, "RULE"=#{rule, jdbcType=VARCHAR}, "COMMENT"=#{comment}, update_date=sysdate
+		where p_idx=#{p_idx}
+	</update>
+	
+	<!-- 카테고리별 파티 리스트 + 더보기 -->
+	<select id="getListbycategory" parameterType="org.prj.domain.Criteria" resultType="org.prj.domain.PartyBoardVO">
+	<![CDATA[
+		select * from
+		(select rownum rn, p_idx, m_idx, codeone, codetwo, title, "NAME", nickname, id, party_num
+			, share_id, share_pw, phone, start_date, end_date, price, "RULE", "COMMENT", status
+			, reg_date, update_date, curr_party, c_primary, c_secondary, trunc(end_date)-trunc(sysdate) as datediff, 
+		 	((trunc(end_date)-trunc(sysdate)) * price) as totalprice
+		from
+			(select p.p_idx, p.m_idx, p.codeone, p.codetwo, p.title, p."NAME", p.nickname, p.id, p.party_num
+			, p.share_id, p.share_pw, p.phone, p.start_date, p.end_date, p.price, p."RULE", p."COMMENT", p.status
+			, p.reg_date, p.update_date, p.curr_party, c.c_primary, c.c_secondary, trunc(end_date)-trunc(sysdate) as datediff, 
+		 	((trunc(end_date)-trunc(sysdate)) * price) as totalprice
+			from party_board p inner join category c 
+			on p.codeone=c.codeone and p.codetwo=c.codetwo
+			where p.codeone=#{codeone}
+			order by status desc, p_idx desc)
+		where rownum <= #{pageNum} * 12 )
+		where rn > (#{pageNum}-1) * 12
+	]]>
+	</select>
+	
+	<!-- 2차 카테고리별 파티 리스트 -->
+	<select id="getListbycategory2" parameterType="org.prj.domain.Criteria" resultType="org.prj.domain.PartyBoardVO">
+		<![CDATA[
+		select * from
+		(select rownum rn, p_idx, m_idx, codeone, codetwo, title, "NAME", nickname, id, party_num
+			, share_id, share_pw, phone, start_date, end_date, price, "RULE", "COMMENT", status
+			, reg_date, update_date, curr_party, c_primary, c_secondary, trunc(end_date)-trunc(sysdate) as datediff, 
+		 	((trunc(end_date)-trunc(sysdate)) * price) as totalprice
+		from
+			(select p.p_idx, p.m_idx, p.codeone, p.codetwo, p.title, p."NAME", p.nickname, p.id, p.party_num
+			, p.share_id, p.share_pw, p.phone, p.start_date, p.end_date, p.price, p."RULE", p."COMMENT", p.status
+			, p.reg_date, p.update_date, p.curr_party, c.c_primary, c.c_secondary, trunc(end_date)-trunc(sysdate) as datediff, 
+		 	((trunc(end_date)-trunc(sysdate)) * price) as totalprice
+			from party_board p inner join category c 
+			on p.codeone=c.codeone and p.codetwo=c.codetwo
+			where p.codeone=#{codeone} and p.codetwo=#{codetwo}
+			order by status desc, p_idx desc)
+		where rownum <= #{pageNum} * 12 )
+		where rn > (#{pageNum}-1) * 12
+		]]>
+	</select>
+	
+	<!-- 게시글 상세 -->
+	<select id="getDetailParty" parameterType="int" resultType="org.prj.domain.PartyBoardVO">
+		select p.p_idx, p.m_idx, p.codeone, p.codetwo, p.title, p."NAME", p.nickname, p.id, p.party_num
+		, p.share_id, p.share_pw, p.phone, p.start_date, p.end_date, p.price, p."RULE", p."COMMENT", p.status
+		, p.reg_date, p.update_date, p.curr_party, c.c_primary, c.c_secondary, trunc(end_date)-trunc(sysdate) as datediff, 
+	 	((trunc(end_date)-trunc(sysdate)) * price) as totalprice
+		from party_board p inner join category c 
+		on p.codeone=c.codeone and p.codetwo=c.codetwo
+		where p_idx=#{p_idx}
+	</select>
+	
+	<!-- 참여인원 업데이트 -->
+	<update id="updateCurrNum" parameterType="int">
+		update party_board set curr_party=curr_party+1 where p_idx=#{p_idx}
+	</update>
+	
+	<!-- 결제취소, 환불승인 시 참여인원 업데이트 -->
+	<update id="cancleUpdateCurrNum" parameterType="int">
+		update party_board set curr_party=curr_party-1 where p_idx=#{p_idx}
+	</update>
+	
+	<!-- 파티 결제한 파티원 닉네임 리스트 -->
+	<select id="getPaymentMemberList" parameterType="int" resultType="org.prj.domain.MemberVO">
+		select m.nickname, p.approved_at, m.id
+		from (select * from payment where pay_status='B' OR pay_status='C' OR pay_status='E') p inner join member m
+		on p.id=m.id
+		where p_idx=#{p_idx} and (p.pay_status = 'B' or p.pay_status = 'C' OR pay_status='E')
+	</select>
+	
+	<!-- 내가 참여중인 파티 -->
+	<select id="getParticipating" parameterType="String" resultType="org.prj.domain.PartyBoardVO">
+		select p.p_idx, p.m_idx, p.codeone, p.codetwo, p.title, p."NAME", p.nickname, p.id, p.party_num
+		, p.share_id, p.share_pw, p.phone, p.start_date, p.end_date, p.price, p."RULE", p."COMMENT", p.status
+		, p.reg_date, p.update_date, p.curr_party, c.c_primary, c.c_secondary, trunc(end_date)-trunc(sysdate) as datediff, 
+	 	((trunc(end_date)-trunc(sysdate)) * price) as totalprice
+		from (select * from party_board where <![CDATA[ (trunc(end_date)-trunc(sysdate)) >= 0 ]]>) p inner join category c 
+		on p.codeone=c.codeone and p.codetwo=c.codetwo
+        where p_idx in (select p_idx from payment where id=#{id} and (pay_status='B' OR pay_status='C' OR pay_status='E'))
+	</select>
+	
+	<!-- 마감 파티 상태 변경 -->
+	<update id="partyStatusUpdate">
+		update party_board 
+		set status='N' 
+		where status='Y' and <![CDATA[ (trunc(end_date)-trunc(sysdate)) <= 0 ]]>
+	</update>
+	
+	<select id="getMyPartyTotal" parameterType="int" resultType="int">
+		select count(*) from party_board where m_idx=#{m_idx}
+	</select>
+	
+	<!-- id 불러온다!!-->
+	<select id="idSearch" parameterType="int" resultType="String">
+		SELECT id FROM party_board where p_idx = #{p_idx }
+	</select>
+	
+	<!-- 메인 파티조회 -->
+	<select id="mainAllParty" resultType="org.prj.domain.PartyBoardVO">
+		SELECT *
+		FROM (
+		    SELECT p.p_idx, p.m_idx, p.codeone, p.codetwo, p.title, p."NAME", p.nickname, p.id, p.party_num
+		        , p.share_id, p.share_pw, p.phone, p.start_date, p.end_date, p.price, p."RULE", p."COMMENT", p.status
+		        , p.reg_date, p.update_date, p.curr_party, c.c_primary, c.c_secondary, trunc(p.end_date)-trunc(sysdate) as datediff, 
+		        ((trunc(p.end_date)-trunc(sysdate)) * p.price) as totalprice,
+		        ROW_NUMBER() OVER (ORDER BY p.reg_date DESC) AS row_num
+		    FROM party_board p 
+		    INNER JOIN category c 
+		    ON p.codeone=c.codeone and p.codetwo=c.codetwo
+		    WHERE p.status = 'Y' and (trunc(p.end_date)-trunc(sysdate)) > 0
+		)
+		WHERE row_num BETWEEN 1 AND 16
+	</select>
+	
+	<!-- ===================관리자====================== -->
+	<!-- 파티 개수 -->
+	<select id="getAdminPartyTotal" parameterType="org.prj.domain.Criteria" resultType="int">
+		select count(*)
+		from party_board
+		where 1=1
+		<if test='codeone != null and codeone != ""'>
+			and codeone=#{codeone}
+		</if>
+		<if test='codetwo != null and codetwo != ""'>
+			and codetwo=#{codetwo}
+		</if>
+		<choose>
+	        <when test='status.equals("recruiting")'>
+	            and status='Y'
+	        </when>
+	        <when test='status.equals("close")'>
+	            and status='N'
+	        </when>
+	    </choose>
+		<if test='searchword != null or searchword != ""'>
+			<choose>
+		        <when test='searchcolumn.equals("p_idx")'>
+		            and p_idx LIKE '%' || #{searchword} || '%'
+		        </when>
+		        <when test='searchcolumn.equals("title")'>
+		            and LOWER(title) LIKE '%' || #{searchword} || '%'
+		        </when>
+		        <when test='searchcolumn.equals("id")'>
+		            and LOWER(id) LIKE '%' || #{searchword} || '%'
+		        </when>
+		        <when test='searchcolumn.equals("nickname")'>
+		            and LOWER(nickname) LIKE '%' || #{searchword} || '%'
+		        </when>
+		    </choose>
+		</if>
+	</select>
+	
+	<!-- 파티 리스트 -->
+	<select id="getAdminPartyList" parameterType="org.prj.domain.Criteria" resultType="org.prj.domain.PartyBoardVO">
+		select * from
+		(select rownum rn, p_idx, m_idx, codeone, codetwo, title, "NAME", nickname, id, party_num
+			, share_id, share_pw, phone, start_date, end_date, price, "RULE", "COMMENT", status
+			, reg_date, update_date, curr_party, c_primary, c_secondary, trunc(end_date)-trunc(sysdate) as datediff, 
+		 	((trunc(end_date)-trunc(sysdate)) * price) as totalprice
+	 	from
+			(select p.p_idx, p.m_idx, p.codeone, p.codetwo, p.title, p."NAME", p.nickname, p.id, p.party_num
+			, p.share_id, p.share_pw, p.phone, p.start_date, p.end_date, p.price, p."RULE", p."COMMENT", p.status
+			, p.reg_date, p.update_date, p.curr_party, c.c_primary, c.c_secondary, trunc(end_date)-trunc(sysdate) as datediff, 
+		 	((trunc(end_date)-trunc(sysdate)) * price) as totalprice
+			from party_board p inner join category c 
+			on p.codeone=c.codeone and p.codetwo=c.codetwo
+			where 1=1
+			<if test='codeone != null and codeone != ""'>
+				and p.codeone=#{codeone}
+			</if>
+			<if test='codetwo != null and codetwo != ""'>
+				and p.codetwo=#{codetwo}
+			</if>
+			<choose>
+		        <when test='status.equals("recruiting")'>
+		            and p.status='Y'
+		        </when>
+		        <when test='status.equals("close")'>
+		            and p.status='N'
+		        </when>
+		    </choose>
+			<if test='searchword != null or searchword != ""'>
+				<choose>
+			        <when test='searchcolumn.equals("p_idx")'>
+			            and p.p_idx LIKE '%' || #{searchword} || '%'
+			        </when>
+			        <when test='searchcolumn.equals("title")'>
+			            and LOWER(p.title) LIKE '%' || #{searchword} || '%'
+			        </when>
+			        <when test='searchcolumn.equals("id")'>
+			            and LOWER(p.id) LIKE '%' || #{searchword} || '%'
+			        </when>
+			        <when test='searchcolumn.equals("nickname")'>
+			            and LOWER(p.nickname) LIKE '%' || #{searchword} || '%'
+			        </when>
+			    </choose>
+			</if>
+			order by p.p_idx desc)
+		<![CDATA[	
+		where rownum <= #{pageNum} * #{amount})
+		where rn > (#{pageNum}-1) * #{amount}
+		]]>
+	</select>
+	
+	<!-- 파티 수정 -->
+	<update id="doAdminUpdateParty" parameterType="org.prj.domain.PartyBoardVO">
+		update party_board set codeone=#{codeone}, codetwo=#{codetwo}, title=#{title}, party_num=#{party_num}, share_id=#{share_id},
+		share_pw=#{share_pw}, phone=#{phone}, end_date=#{end_date}, price=#{price}, "RULE"=#{rule, jdbcType=VARCHAR}, "COMMENT"=#{comment}, update_date=sysdate
+		where p_idx=#{p_idx}
+	</update>
+	
+	<!-- 파티 마감 -->
+	<update id="doPartyclose" parameterType="int">
+		update party_board set status='N' where p_idx=#{p_idx}
+	</update>
+	
+	<!-- 파티 오픈 -->
+	<update id="doPartyOpen" parameterType="int">
+		update party_board set status='Y' where p_idx=#{p_idx}
+	</update>
+	
+	<select id="getPartyRatio" resultType="org.prj.domain.PartyBoardVO">
+		SELECT 
+		    codeone,
+		    COUNT(*) AS total_count,
+		    ROUND((COUNT(*) / (SELECT COUNT(*) FROM party_board)) * 100, 2) AS ratio
+		FROM party_board GROUP BY codeone ORDER BY codeone
+	</select>
+	
+	<!-- 파티테이블 내 정보 변경 -->
+	<update id="updateMyinfo" parameterType="org.prj.domain.MemberVO">
+		update party_board set name=#{name}, phone=#{phone} where m_idx=#{m_idx}
+	</update>
+	
+	<!-- 환불 금액 계산을 위해 일금액, 남은 기간 불러오기 -->
+	<select id="getCurrentPartyInfo" parameterType="int" resultType="org.prj.domain.PartyBoardVO">
+		select price, trunc(end_date)-trunc(sysdate) as datediff from party_board where p_idx=#{p_idx}
+	</select>
+	
+	<!-- 파티 삭제 -->
+	<delete id="deleteParty" parameterType="int">
+		delete from party_board where p_idx=#{p_idx}
+	</delete>
+	
+	<!-- 파티장 아이디 -->
+	<select id="getPartnerId" parameterType="int" resultType="String">
+		select id from party_board where p_idx=#{p_idx}
+	</select>
+</mapper>

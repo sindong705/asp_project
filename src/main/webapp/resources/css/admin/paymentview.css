@@ -1,0 +1,226 @@
+.title-div {
+	border-bottom: 2px solid #43a051;
+}
+
+.title {
+    margin-top: 60px;
+    margin-bottom: 20px;
+    font-size: 22px;
+    color: #333333;
+    line-height: 32px;
+    font-weight: bold;
+}
+
+.sub-title {
+	margin-top: 56px;
+    margin-bottom: 20px;
+    font-size: 18px;
+    font-weight: 500;
+    color: #333333;
+}
+
+table {
+	border-spacing: 0;
+    border-collapse: collapse;
+}
+
+.list-payment {
+	border-top: 1px solid #333333;
+    border-bottom: 1px solid #ececec;
+}
+
+.list-payment table {
+	width: 100%;
+}
+
+.list-payment table th, .list-payment table td {
+	text-align: center;
+}
+
+.list-payment table th {
+	padding: 19px 0;
+    font-size: 14px;
+    font-weight: bold;
+    color: #333333;
+    background-color: #f9f9f9;
+}
+
+.list-payment table td {
+	padding: 28px 0 27px;
+	font-size: 14px;
+    font-weight: 500;
+    color: #333;
+    line-height: 16px;
+    border-top: 1px solid #ececec;
+}
+
+.list-payment table td strong {
+	font-size: 18px;
+    font-weight: 700;
+    letter-spacing: -1px;
+}
+
+.list-payment table .title-td {
+	padding-left: 50px;
+    font-size: 15px;
+    font-weight: 500;
+    color: #333333;
+    text-align: left;
+    line-height: 18px;
+}
+
+.list-payment table .sub-title {
+	font-size: 13px;
+    color: #aaaaaa;
+}
+
+.form-half {
+	display: inline-block;
+    width: calc(50% - 22px);
+    vertical-align: top;
+}
+
+.form-half.left {
+	margin-right: 40px;
+}
+
+.form-list {
+	border-top: 1px solid #333333;
+}
+
+.form-list li {
+	font-size: 14px;
+    color: #333333;
+    border-top: 1px solid #ececec;
+    position: relative;
+}
+
+.form-list li .subject {
+	width: 120px;
+    padding:  18px 0;
+    text-indent: -5px;
+    display: inline-block;
+}
+
+.form-list li .right {
+	position: absolute;
+    top: 0;
+    right: 0;
+	width: calc(100% - 88px);
+    padding: 18px 0;
+    text-align: right;
+    font-size: 16px;
+}
+
+.form-list li .right.fill {
+	padding: 12px 0;
+}
+
+.form-list input[type='text'] {
+	width: 180px;
+	height: 32px;
+    margin-right: 0;
+    padding: 0 10px;
+    font-size: 13px;
+    font-weight: 300;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    border: solid 1px #dddddd;
+}
+
+.form-list .text-point {
+	color: #43a051 !important;
+}
+
+.form-list .point {
+	width: 86px !important;
+    margin: 0 2px 0 12px;
+}
+
+.form-list .point-btn {
+	width: 70px;
+    min-width: 50px;
+    height: 32px;
+    font-size: 14px;
+    line-height: 30px;
+    background-color: #43a051;
+    color: white;
+    border: 0;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.form-list .total {
+	position: relative;
+    padding: 0 20px !important;
+    border: 1px solid #333333 !important;
+    background-color: #f9f9f9;
+    margin-top: 20px;
+}
+
+.form-list .total .right {
+	right: 15px;
+}
+
+.form-list .total .right .total-price {
+	font-size: 24px;
+    font-weight: 700;
+    line-height: 0;
+    vertical-align: -2px;
+    color: #006d77;
+}
+
+.caution {
+	padding: 24px 30px;
+    margin-top: 50px;
+    font-size: 13px;
+    font-weight: 300;
+    color: #888888;
+    word-break: keep-all;
+    border-top: 1px solid #ececec;
+    border-bottom: 1px solid #ececec;
+    background-color: #f9f9f9;
+}
+
+.caution strong {
+	display: inline-block;
+    margin-bottom: 8px;
+    font-weight: 400;
+    color: #333333;
+}
+
+.caution ul {
+	list-style: decimal;
+    margin-left: 10px;
+}
+
+.caution li {
+	padding: 2px 0;
+}
+
+.caution p {
+	margin: 8px 0 0 0;
+}
+
+.pay-btn {
+	text-align: center;
+	min-height: 53px;
+    margin-top: 60px;
+}
+
+.pay-btn-submit {
+	border: 0px;
+    background-color: #006D77;
+    color: white;
+	min-width: 340px;
+    height: 80px;
+    font-size: 20px;
+    line-height: 78px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.pay-btn-submit:hover {
+	text-decoration: none;
+	color: white;
+}

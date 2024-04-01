@@ -1,0 +1,90 @@
+a:hover {
+    color: #43a051 !important;
+}
+
+pre {
+    overflow: unset !important;
+    font-size: 14px !important;
+    line-height: 24px;
+    word-break: break-all;
+    text-align: left;
+}
+
+.faq-title {
+	text-align: center;
+    padding: 0 10px;
+    font-size: 28px;
+    font-weight: 600;
+    color: #333333;
+    margin: 70px 0 16px 0;
+}
+
+.faq-img {
+	width: 130px;
+    vertical-align: -10px;
+}
+
+.faq-tab {
+	margin: 30px 0 40px;
+}
+
+.faq-tab a {
+	display: inline-block;
+    padding: 8px 20px;
+    font-size: 22px;
+    font-weight: 600;
+    color: #aaaaaa;
+}
+
+.faq-tab a.active {
+	color: #43a051;
+}
+
+.faq-content {
+	width: 800px;
+	margin: 0 auto;
+}
+
+.accordion {
+	margin-top: 5px;
+	
+}
+
+.accordion-item {
+	display: block;
+    width: 100%;
+    font-size: 20px;
+    color: #333;
+    line-height: 24px;
+    word-break: keep-all;
+    border-radius: 20px !important;
+    border: solid 1px #e3e1ee !important;
+    background-color: #ffffff !important;
+    overflow: hidden;
+}
+
+.accordion-button {
+	font-size: 20px !important;
+	padding: 26px 40px !important;
+}
+.accordion:hover .accordion-button {
+    color: #43a051;
+}
+
+.accordion:hover .accordion-item {
+	border: solid 1px #43a051 !important;
+}
+
+.accordion-button:not(.collapsed) {
+    color: #43a051 !important;
+    background-color: #f0fff3 !important;
+}
+
+.accordion-button:focus {
+	box-shadow: none !important;
+}
+
+.accordion-button:not(.collapsed)::after {
+	background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%2343a051'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e") !important;
+	
+}

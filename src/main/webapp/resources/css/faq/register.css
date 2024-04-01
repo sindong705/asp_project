@@ -1,0 +1,81 @@
+#service-container {
+	margin: auto;
+	width: 1200px;
+	margin-top: 50px;
+	margin-bottom: 80px;
+}
+
+#form-container {
+	border-top: 1px solid #000;
+    padding-top: 15px;
+}
+
+#party-tab-title {
+	font-size: 25px;
+    margin-bottom: 20px;
+}
+
+#registerform {
+	font-size: 13px;
+}
+
+#registerform select {
+	width: 170px;
+	display: inline;
+	font-size: 13px;
+}
+
+#registerform input[name="title"] {
+	width: 100%;
+	font-size: 13px;
+}
+
+#registerform textarea {
+	resize: none;
+	height: 500px;
+	font-size: 13px;
+}
+
+#periodCheckResult, #totalpriceResult {
+	margin-left: 10px;
+	color: #006D77;
+    font-weight: 600;
+}
+
+#registertable th, td {
+	padding-bottom: 15px;
+}
+
+#registertable th {
+	padding-right: 30px;
+	width: 100px;
+}
+
+#registerBtn {
+	text-align: center;
+}
+
+#faqList, #faqRegister, #faqModify {
+	width: 150px;
+	height: 50px;
+	font-size: 15px;
+	color: white;
+    border-radius: 5px;
+    border: 0px;
+}
+
+#faqRegister, #faqModify {
+    background-color: #006D77;
+}
+
+#faqRegister:hover, #faqModify:hover {
+    background-color: #FFE05C;
+}
+
+#faqList {
+    background-color: #333;
+}
+
+#faqList:hover {
+	background-color: #111;
+}

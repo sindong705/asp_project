@@ -1,0 +1,279 @@
+.container-title {
+    margin-top: 50px;
+    margin-bottom: 25px;
+    font-size: 22px;
+    color: #333333;
+    line-height: 32px;
+}
+
+.text-point {
+	color: #43a051;
+}
+
+/* 삭제할것(test) */
+.test_div1 {
+	margin-top: 50px;
+	width: 100%;
+	height: 200px;
+	background-color: #F7B9D9;
+}
+
+/* container2 */
+.container2 {
+	width: 100%;
+}
+
+#service{
+	font-size: 22px;
+	color: #333;
+	font-weight: 500;
+}
+
+#service img{
+	display: inline-block;
+    width: 35px;
+    vertical-align: top;
+}
+    
+#title{
+	font-size: 15px;
+	color: gray;
+	margin-bottom: 20px;
+}
+
+.ellipsis{
+	white-space: nowrap;
+  	overflow: hidden;
+  	text-overflow: ellipsis;
+  	max-width: 240px;
+}
+
+#curr-party{
+	height: 40px;
+	overflow: hidden;
+	margin-bottom: 10px;
+	margin-left: -5px;
+}
+
+.participation{
+	width: 40px; 
+	display:inline-block;
+}
+
+.non-participation{
+	width: 40px; 
+	display:inline-block;
+	filter: grayscale(100%);
+}
+
+#enddate{
+	font-size: 14px;
+	color: gray;
+	display: inline;
+}
+
+#period{
+	font-weight: bold;
+}
+
+#price{
+	font-weight: bold;
+	display: inline;
+	position: absolute;
+	right:30px;
+	font-size: 18px;
+	line-height: 18px;
+}
+
+/* slide */
+.slide-container {
+	position: relative;
+}
+
+.slide-prev, .slide-next {
+	position: absolute;
+    top: 50%;
+    width: 36px;
+    height: 100px;
+    margin-top: -50px;
+    background-color: #fff;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.slide-prev {
+	left: -60px;
+}
+
+.slide-next {
+	right: -60px;
+}
+
+.slide-prev::before {
+	transform: rotate(-45deg);
+    margin: -7px 0 0 -10px;
+}
+
+.slide-prev::after {
+	transform: rotate(45deg);
+    margin: 7px 0 0 -10px;
+}
+
+.slide-next::before {
+	transform: rotate(45deg);
+    margin: -7px 0 0 -10px;
+}
+
+.slide-next::after {
+	transform: rotate(-45deg);
+    margin: 7px 0 0 -10px;
+}
+
+.navi::before, .navi::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    display: block;
+    width: 20px;
+    height: 1px;
+    background-color: #bbb;
+}
+
+.navi:hover {
+	background-color: #43a051;
+}
+
+.navi:hover::before, .navi:hover::after {
+	background-color: #fff;
+}
+
+.indicator {
+	position: absolute;
+    bottom: -20px;
+    left: 0;
+    width: 100%;
+    text-align: center;
+}
+
+.indicator span {
+	display: inline-block;
+    width: 5px;
+    height: 5px;
+    margin: 0 4px;
+    background-color: #dbdbdb;
+    border-radius: 5px;
+    transition: width 0.5s;
+}
+
+.indicator span.on {
+	width: 18px;
+    background-color: #43a051;
+    transition: width 0.5s;
+}
+
+.slide-boundary {
+	position: relative;
+    overflow: hidden;
+}
+
+.slide-list {
+	position: relative;
+	width: calc(100% + 26px);
+    margin-left: -13px;
+    font-size: 0;
+    height: 472px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+.slide-row{
+	position: relative;
+    display: inline-block;
+    width: calc(25% - 26px);
+    margin: 13px;
+    color: #666666;
+    vertical-align: top;
+    border-radius: 20px;
+    border: solid 1px lightgray;
+	height: 210px;
+	padding: 30px;
+	cursor: pointer;
+	flex: none;
+}
+
+.slide-row:hover{
+	border: 1px solid #258e75;
+}
+
+.slide-row:hover > #service{
+	color: #258e75;
+}
+
+
+/* container3 */
+.container3 {
+	width: 100%;
+}
+
+.video-container {
+	position: relative;
+    width: calc(100% + 26px);
+    margin-left: -13px;
+    margin-top: -13px;
+    font-size: 0;
+}
+
+.video-box {
+	position: relative;
+    display: inline-block;
+    width: calc(25% - 26px);
+    margin: 13px;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.video-box img {
+	width: 100%;
+}
+
+.modal-dialog {
+	max-width: 1200px !important;
+}
+
+.modal-content {
+	background-color: transparent !important;
+	border: none !important;
+}
+
+.modal-body {
+	padding-bottom: 56.25% !important; /* 16:9 */
+    height: 0;
+}
+
+.modal-body iframe {
+	position: absolute;
+    top: 0;
+    left: 0;
+	width: 100%;
+  	height: 100%;
+}
+
+.modal-header {
+	padding: 0 !important;
+	border-bottom: none !important;
+	justify-content: flex-end !important;
+}
+
+.fa-xmark:before {
+	content: "\f00d";
+}
+
+.video-close {
+	color: #fff !important;
+    font-size: 25px !important;
+    padding: 0 !important;
+}

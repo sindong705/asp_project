@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.prj.mapper.PaymentMapper">
+	<!-- 결제내역 등록 -->	
+	<insert id="order" parameterType="org.prj.domain.PaymentVO">
+		insert into payment
+			(order_no, p_idx, m_idx, id, name, phone, service_amount, pay_amount, point, commission, pay_method, pay_status, approved_at, title, imp_uid, token, sub_title, end_date)
+		values 
+			(#{order_no}, #{p_idx}, #{m_idx}, #{id}, #{name}, #{phone}, #{service_amount}, #{pay_amount}, #{point}, #{commission}, #{pay_method}, #{pay_status}, SYSDATE, #{title}, #{imp_uid}, #{token}, #{sub_title}, #{end_date})
+	</insert>
+	
+	<!-- 결제정보 -->
+	<select id="orderList" parameterType="org.prj.domain.Criteria" resultType="org.prj.domain.PaymentVO"> 
+	<![CDATA[
+		select * from
+        (select rownum rn, order_no, p_idx, m_idx, title, sub_title, id, name, phone, point,service_amount, pay_amount, commission, pay_status, approved_at, end_date, refund_amount, note
+            from (SELECT * FROM payment where m_idx = #{m_idx} ORDER BY approved_at desc)
+		where rownum <= #{pageNum} * #{amount})
+		where rn > (#{pageNum}-1) * #{amount}
+	]]>
+	</select>
+	
+	<!-- 결제조회 -->
+	<select id="orderGet" resultType="org.prj.domain.PaymentVO">
+		SELECT * FROM payment where order_no=#{order_no}
+	</select>
+	
+	<!-- 결제정보 개수 -->
+	<select id="orderTotal" parameterType="int" resultType="int">
+		select count(*) 
+		from payment
+		where m_idx=#{m_idx}
+	</select>
+	
+	<!-- 결제취소 상태변경 -->
+	<update id="cancelStatus">
+		update payment set pay_status='D' where order_no=#{order_no}
+	</update>
+	
+	<!--  참여정보  -->
+	<select id="getPayMemberList" parameterType="org.prj.domain.Criteria" resultType="org.prj.domain.PaymentVO"> 
+		select * from
+		(select rownum rn, order_no, p_idx, m_idx, title, sub_title, id, name, phone, service_amount, pay_amount, commission, pay_status, approved_at, end_date
+		from
+			(select pay.order_no, pay.p_idx, pay.m_idx, pay.title, pay.sub_title, pay.id, pay.name, pay.phone, pay.service_amount, pay.pay_amount, pay.commission, pay.pay_status, pay.approved_at, pay.end_date
+			from payment pay inner join 
+			(select p.p_idx, p.m_idx, p.id from party_board p inner join member m on p.m_idx=m.m_idx) pm 
+			on pay.p_idx = pm.p_idx 
+			where pm.m_idx=#{m_idx} and pay.pay_status = 'B'
+			<if test='searchword != null or searchword != ""'>
+				<choose>
+			        <when test='searchcolumn.equals("p_idx")'>
+			            and pay.p_idx LIKE '%' || #{searchword} || '%'
+			        </when>
+			        <when test='searchcolumn.equals("name")'>
+			            and LOWER(pay.name) LIKE '%' || #{searchword} || '%'
+			        </when>
+			        <when test='searchcolumn.equals("id")'>
+			            and LOWER(pay.id) LIKE '%' || #{searchword} || '%'
+			        </when>
+			    </choose>
+			</if>
+			<if test='sort.equals("latest")'>
+				order by pay.p_idx desc
+ 			</if>
+ 			<if test='sort.equals("period")'>
+				order by (trunc(pay.end_date)-trunc(sysdate)) desc
+ 			</if>)
+		<![CDATA[
+			where rownum <= #{pageNum} * #{amount})
+			where rn > (#{pageNum}-1) * #{amount}
+		]]>
+	</select>
+	
+	<!-- 내 파티 참여자 -->
+	<select id="getPayPartyTotal" parameterType="org.prj.domain.Criteria" resultType="int">
+		SELECT COUNT(*)
+		FROM payment pay
+		INNER JOIN (
+		    SELECT p.p_idx, p.m_idx, p.id
+		    FROM party_board p
+		    INNER JOIN member m ON p.m_idx = m.m_idx
+		) pm ON pay.p_idx = pm.p_idx
+		WHERE pm.m_idx = #{m_idx} AND pay.pay_status = 'B'
+		<if test='searchword != null or searchword != ""'>
+			<choose>
+		        <when test='searchcolumn.equals("p_idx")'>
+		            and pay.p_idx LIKE '%' || #{searchword} || '%'
+		        </when>
+		        <when test='searchcolumn.equals("name")'>
+		            and LOWER(pay.name) LIKE '%' || #{searchword} || '%'
+		        </when>
+		        <when test='searchcolumn.equals("id")'>
+		            and LOWER(pay.id) LIKE '%' || #{searchword} || '%'
+		        </when>
+		    </choose>
+		</if>
+	</select>
+	
+	<!--  취소내역  -->
+	<select id="getPartyCancelList" parameterType="org.prj.domain.Criteria" resultType="org.prj.domain.PaymentVO"> 
+		select * from
+		(select rownum rn, order_no, p_idx, m_idx, title, sub_title, id, name, phone, service_amount, pay_amount, commission, pay_status, approved_at, end_date
+		from
+			(select pay.order_no, pay.p_idx, pay.m_idx, pay.title, pay.sub_title, pay.id, pay.name, pay.phone, pay.service_amount, pay.pay_amount, pay.commission, pay.pay_status, pay.approved_at, pay.end_date
+			from payment pay inner join 
+			(select p.p_idx, p.m_idx, p.id from party_board p inner join member m on p.m_idx=m.m_idx) pm 
+			on pay.p_idx = pm.p_idx 
+			where pm.m_idx=#{m_idx} and (pay.pay_status = 'C' or pay.pay_status = 'D')
+			<if test='searchword != null or searchword != ""'>
+				<choose>
+			        <when test='searchcolumn.equals("p_idx")'>
+			            and pay.p_idx LIKE '%' || #{searchword} || '%'
+			        </when>
+			        <when test='searchcolumn.equals("name")'>
+			            and LOWER(pay.name) LIKE '%' || #{searchword} || '%'
+			        </when>
+			        <when test='searchcolumn.equals("id")'>
+			            and LOWER(pay.id) LIKE '%' || #{searchword} || '%'
+			        </when>
+			    </choose>
+			</if>
+			<if test='sort.equals("latest")'>
+				order by pay.p_idx desc
+ 			</if>
+ 			<if test='sort.equals("period")'>
+				order by (trunc(pay.end_date)-trunc(sysdate)) desc
+ 			</if>)
+		<![CDATA[
+			where rownum <= #{pageNum} * #{amount})
+			where rn > (#{pageNum}-1) * #{amount}
+		]]>
+	</select>
+	
+	<!-- 취소 수 -->
+	<select id="getPartyCancelTotal" parameterType="org.prj.domain.Criteria" resultType="int">
+		SELECT COUNT(*)
+		FROM payment pay
+		INNER JOIN (
+		    SELECT p.p_idx, p.m_idx, p.id
+		    FROM party_board p
+		    INNER JOIN member m ON p.m_idx = m.m_idx
+		) pm ON pay.p_idx = pm.p_idx
+		WHERE pm.m_idx = #{m_idx} AND (pay.pay_status = 'C' or pay.pay_status = 'D')
+		<if test='searchword != null or searchword != ""'>
+			<choose>
+		        <when test='searchcolumn.equals("p_idx")'>
+		            and pay.p_idx LIKE '%' || #{searchword} || '%'
+		        </when>
+		        <when test='searchcolumn.equals("name")'>
+		            and LOWER(pay.name) LIKE '%' || #{searchword} || '%'
+		        </when>
+		        <when test='searchcolumn.equals("id")'>
+		            and LOWER(pay.id) LIKE '%' || #{searchword} || '%'
+		        </when>
+		    </choose>
+		</if>
+	</select>
+	
+	<!-- 월별 결제 총액 -->
+	<select id="getTotalPayment" resultType="org.prj.domain.PaymentVO">
+		SELECT * 
+		FROM (
+		    SELECT 
+		        TO_CHAR(APPROVED_AT, 'YYYYMM') AS MONTH,
+		        SUM(PAY_AMOUNT) AS TOTAL_REVENUE
+		    FROM 
+		        payment
+		    GROUP BY 
+		        TO_CHAR(APPROVED_AT, 'YYYYMM')
+		    ORDER BY 
+		        MONTH
+		) 
+		<![CDATA[	
+		WHERE ROWNUM <= 12
+		]]>
+	</select>
+	
+	<!-- 연간 결제 총액 -->
+	<select id="getTotalEarning" resultType="int">
+		SELECT 
+		    SUM(PAY_AMOUNT)
+		FROM 
+		    payment
+		WHERE 
+		    EXTRACT(YEAR FROM APPROVED_AT) = EXTRACT(YEAR FROM SYSDATE)
+	</select>
+	
+	<!--  결제관리 개수  -->
+	<select id="getAdminPaymentTotal" parameterType="org.prj.domain.Criteria" resultType="int"> 
+		select count(*)
+		from payment
+		where 1=1
+		<if test='category != "all"'>
+			and title LIKE '%' || #{category} || '%'
+		</if>
+		<choose>
+	        <when test='status.equals("B")'>
+	            and pay_status='B'
+	        </when>
+	        <when test='status.equals("C")'>
+	            and pay_status='C'
+	        </when>
+	        <when test='status.equals("D")'>
+	            and pay_status='D'
+	        </when>
+	    </choose>
+		<if test='searchword != null or searchword != ""'>
+			<choose>
+				<when test='searchcolumn.equals("order_no")'>
+		            and order_no LIKE '%' || #{searchword} || '%'
+		        </when>
+		        <when test='searchcolumn.equals("p_idx")'>
+		            and p_idx LIKE '%' || #{searchword} || '%'
+		        </when>
+		        <when test='searchcolumn.equals("sub_title")'>
+		            and LOWER(sub_title) LIKE '%' || #{searchword} || '%'
+		        </when>
+		        <when test='searchcolumn.equals("id")'>
+		            and LOWER(id) LIKE '%' || #{searchword} || '%'
+		        </when>
+		    </choose>
+		</if>
+	</select>
+	
+	<!--  결제관리  -->
+	<select id="getAdminPaymentList" parameterType="org.prj.domain.Criteria" resultType="org.prj.domain.PaymentVO"> 
+		select * from
+		(select rownum rn, order_no, p_idx, m_idx, title, sub_title, id, name, phone, point, service_amount, pay_amount, commission, pay_status, approved_at, end_date 
+		from
+			(select * 
+			from payment 
+			where 1=1
+			<if test='category != "all"'>
+				and title LIKE '%' || #{category} || '%'
+			</if>
+			<choose>
+		        <when test='status.equals("B")'>
+		            and pay_status='B'
+		        </when>
+		        <when test='status.equals("C")'>
+		            and pay_status='C'
+		        </when>
+		        <when test='status.equals("D")'>
+		            and pay_status='D'
+		        </when>
+		    </choose>
+			<if test='searchword != null or searchword != ""'>
+				<choose>
+					<when test='searchcolumn.equals("order_no")'>
+			            and order_no LIKE '%' || #{searchword} || '%'
+			        </when>
+			        <when test='searchcolumn.equals("p_idx")'>
+			            and p_idx LIKE '%' || #{searchword} || '%'
+			        </when>
+			        <when test='searchcolumn.equals("sub_title")'>
+			            and LOWER(sub_title) LIKE '%' || #{searchword} || '%'
+			        </when>
+			        <when test='searchcolumn.equals("id")'>
+			            and LOWER(id) LIKE '%' || #{searchword} || '%'
+			        </when>
+			    </choose>
+			</if>
+			order by approved_at desc)
+	<![CDATA[
+		where rownum <= #{pageNum} * #{amount})
+		where rn > (#{pageNum}-1) * #{amount}
+	]]>
+	</select>
+	
+	<!-- 환불 신청 -->
+	<update id="doPayStatus" parameterType="String">
+		update payment set pay_status='C' where order_no=#{order_no}
+	</update>
+	
+	<!-- 환불 승인 -->
+	<update id="doRefundApproval" parameterType="org.prj.domain.RefundVO">
+		update payment set pay_status='F', refund_amount=#{re_amount} where m_idx=#{m_idx} and order_no=#{order_no}
+	</update>
+	
+	<!-- 환불 반려 -->
+	<update id="doRefundReturn" parameterType="org.prj.domain.RefundVO">
+		update payment set pay_status='E', note=#{rejection} where m_idx=#{m_idx} and order_no=#{order_no}
+	</update>
+</mapper>

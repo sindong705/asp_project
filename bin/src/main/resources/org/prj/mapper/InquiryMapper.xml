@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.prj.mapper.InquiryMapper">
+	
+	<!-- 1. 게시판 내용 불러오기 -->
+	<select id="getList" resultType="org.prj.domain.InquiryVO">
+		<![CDATA[
+		SELECT i_idx, m_idx, inquiry_type, writer, title, content, status, reg_date, update_date
+		FROM (
+		SELECT ROWNUM rn, i_idx, m_idx, inquiry_type, writer, title, content, status, reg_date, update_date
+		FROM 
+		(SELECT * FROM inquiry_board ORDER BY i_idx desc)
+		WHERE ROWNUM <= #{pageNum} * #{amount}
+		ORDER BY i_idx desc)
+		WHERE rn > ( #{pageNum}-1) * #{amount} and m_idx = #{m_idx}
+		]]>
+	</select>
+	
+	<!-- 2. 게시판 페이지 번호 -->
+	<select id="getTotal" resultType="int">
+		SELECT COUNT(*) FROM inquiry_board
+	</select>
+	
+	<!-- 3. 게시판 글 등록 -->
+	<insert id="insert" parameterType="org.prj.domain.InquiryVO">
+		INSERT INTO inquiry_board(i_idx, m_idx, inquiry_type, writer, content, status, reg_date, title)
+		VALUES(SEQ_INQUIRY.nextval, #{m_idx }, #{inquiry_type }, #{writer }, #{content }, 
+				#{status }, sysdate, #{title })
+	</insert>
+	
+	<!-- 4. 게시된 글을 가지고 온다. -->
+	<select id="read" parameterType="int" resultType="org.prj.domain.InquiryVO">
+		SELECT * FROM inquiry_board WHERE i_idx = #{i_idx }
+	</select>
+	
+	<!-- 5. 게시글 수정 -->
+	<update id="update" parameterType="org.prj.domain.InquiryVO">
+		UPDATE inquiry_board
+		SET
+			TITLE = #{title },
+			CONTENT = #{content }
+		WHERE
+			I_IDX = #{i_idx}
+	</update>
+	
+	<!-- 6. 게시글 삭제 -->
+	<delete id="delete" parameterType="int">
+		DELETE FROM inquiry_board WHERE I_IDX = #{i_idx }
+	</delete>
+	
+	<!-- 7. 데이터 게시에 해당하는 번호 가지고 오기 -->
+	<select id="getIdx" resultType="int">
+		SELECT SEQ_INQUIRY.CURRVAL FROM DUAL
+	</select>
+
+	
+	<!-- 여기부터 관리자 화면 -->
+	
+	<!-- 8. 리스트 수 -->
+	<select id="getInquiryBoardTotal" parameterType="org.prj.domain.Criteria" resultType="int">
+		SELECT COUNT(*)
+		FROM inquiry_board
+		WHERE 1=1
+		<if test='category != "all"'>
+			<choose>
+		        <when test='category.equals("inquiry_type2")'>
+		            and inquiry_type = 'A'
+		        </when>
+		        <when test='category.equals("inquiry_type3")'>
+		            and inquiry_type = 'B'
+		        </when>
+		        <when test='category.equals("inquiry_type4")'>
+		            and inquiry_type = 'C'
+		        </when>
+		        <when test='category.equals("inquiry_type5")'>
+		            and inquiry_type = 'D'
+		        </when>
+		        <when test='category.equals("inquiry_type6")'>
+		            and inquiry_type = 'E'
+		        </when>
+		    </choose>
+	    </if>
+	    <if test='status != "status"'>
+			<choose>
+		        <when test='status.equals("status2")'>
+		            and status = 'A'
+		        </when>
+		        <when test='status.equals("status3")'>
+		            and status = 'B'
+		        </when>
+		        <when test='status.equals("status4")'>
+		            and status = 'C'
+		        </when>
+		    </choose>
+		</if>
+	</select>
+	
+	<!-- 9. 관리자 화면 1:1 문의 내용 리스트 -->
+	<select id="inquiryboardList" parameterType="org.prj.domain.Criteria" resultType="org.prj.domain.InquiryVO">
+		select * from 
+		(select rownum rn, i_idx, m_idx, inquiry_type, writer, title, content, status, reg_date, update_date
+		from 
+		(select i_idx, m_idx, inquiry_type, writer, title, content, status, reg_date, update_date
+		from inquiry_board 
+		where 1=1
+			<if test='category != "all"'>
+				<choose>
+			        <when test='category.equals("inquiry_type2")'>
+			            and inquiry_type = 'A'
+			        </when>
+			        <when test='category.equals("inquiry_type3")'>
+			            and inquiry_type = 'B'
+			        </when>
+			        <when test='category.equals("inquiry_type4")'>
+			            and inquiry_type = 'C'
+			        </when>
+			        <when test='category.equals("inquiry_type5")'>
+			            and inquiry_type = 'D'
+			        </when>
+			        <when test='category.equals("inquiry_type6")'>
+			            and inquiry_type = 'E'
+			        </when>
+			    </choose>
+		    </if>
+		    <if test='status != "status"'>
+				<choose>
+			        <when test='status.equals("status2")'>
+			            and status = 'A'
+			        </when>
+			        <when test='status.equals("status3")'>
+			            and status = 'B'
+			        </when>
+			        <when test='status.equals("status4")'>
+			            and status = 'C'
+			        </when>
+			    </choose>
+			</if>
+		order by i_idx desc)
+		<![CDATA[	
+		where ROWNUM <= #{pageNum} * #{amount})
+		where rn > (#{pageNum}-1) * #{amount}
+		]]>
+
+	</select>
+	
+	<!-- 10. 관리자 화면 1:1 문의 내용 모달창 리스트 가지고 오기 -->
+	<select id="getReply" parameterType="int" resultType="org.prj.domain.InquiryVO">
+		SELECT * FROM inquiry_board WHERE i_IDX = #{i_idx }
+	</select>
+	
+	<!-- 11. 관리자 화면에서 1:1 문의 내용을 등록하게 되면 상태가 변경되는 것 -->
+	<update id="statusUpdate" parameterType="org.prj.domain.InquiryVO">
+		UPDATE inquiry_board
+		SET
+		    status = #{status },
+		    UPDATE_DATE = sysdate
+		WHERE
+	   		i_idx = #{i_idx}
+	</update>
+	
+	<!-- 12. 관리자 화면 1:1 문의 게시글 가지고 오기 -->
+	<select id="getInquiry" parameterType="int" resultType="org.prj.domain.InquiryVO">
+		SELECT * FROM inquiry_board WHERE i_IDX = #{i_idx }
+	</select>
+	
+	<!-- 13. 관리자 1:1문의 게시글 수정 -->
+	<update id="AdminInquiryUpdate" parameterType="org.prj.domain.InquiryVO">
+		UPDATE inquiry_board
+		SET
+			TITLE = #{title },
+			CONTENT = #{content }
+		WHERE
+			I_IDX = #{i_idx}
+	</update>
+	
+	<select id="getNewInquiry" resultType="int">
+		select count(*) from inquiry_board where status='A'
+	</select>
+</mapper>

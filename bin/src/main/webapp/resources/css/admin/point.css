@@ -1,0 +1,202 @@
+#category{
+	width: 130px;
+	display: inline;
+	font-size: 13px;
+}
+
+#detailSearch{
+	width: 130px;
+	display: inline;
+	font-size: 13px;
+}
+
+#searchword{
+	width: 300px;
+	font-size: 13px;
+	display: inline;
+}
+
+#search, #reset, #registerOpen, #registerSubmit, #registerClose {
+	font-size: 14px;
+	border-radius: 10px;
+	width: 90px;
+	height: 32px;
+	background-color: #006D77;
+	color: white;
+	border: 0;
+}
+
+#reset{
+	background-color: #333;
+}
+
+#registerOpen{
+	background-color: #ea0540;
+}
+#registerSubmit{
+	background-color: #85879694;
+}
+#registerClose{
+	background-color: black;
+}
+
+.radio{
+	margin-bottom: 10px;
+	font-size: 15px;
+}
+
+#pointlist {
+	margin-top: 30px;
+	border-top: 1px solid #333333;
+	border-bottom: 1px solid #ececec;
+}
+
+#pointlist table {
+	text-align: center;
+	width : 100%;
+}
+
+#pointlist table th {
+	padding: 18px 0;
+	font-size: 14px;
+	font-weight: bold;
+	color: #333333;
+	background-color: #f9f9f9;
+}
+
+#pointlist table td {
+	padding: 15px 0;
+	font-size: 14px;
+	font-weight: 500;
+	color: #333;
+	line-height: 16px;
+	border-top: 1px solid #ececec;
+}
+
+/* 페이징 */
+.page-nation li{
+	list-style: none;
+}
+
+.page-wrap{
+	text-align: center;
+	font-size: 0;
+}
+.page-nation {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-top: 35px;
+}
+
+.page-nation a{
+	display: block;
+	margin: 0 3px;
+	flex: left;
+	border: 1px solid #e6e6e6;
+	border-radius: 10px;
+	width: 28px;
+	height: 28px;
+	line-height: 28px;
+	text-align: center;
+	background-color: #fff;
+	font-size: 13px;
+	color: black;
+	text-decoration: none;
+}
+.page-nation a.active{
+	background-color: #006D77;
+	color: #fff;
+}
+.page-nation a:hover{
+	background-color: #006D77;
+	color: #fff;
+}
+
+.plusPoint{
+	color: blue !important;
+}
+.minusPoint{
+	color: red !important;
+}
+
+/*모달*/
+#registerContainer {
+	position: fixed;
+    left: 0;
+    top: 0;
+	width: 100%;
+    height: 100%;
+    backdrop-filter: blur(1.5px);
+    z-index: 999;
+} 
+#registerContainer.hidden {
+	display: none;
+} 
+#registerContainer .modal-window {
+    background: #fff;
+    box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
+    -webkit-backdrop-filter: blur( 13.5px );
+    border-radius: 10px;
+    width: 600px;
+    height: 400px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); 
+    padding: 20px;
+    z-index: 1000;
+}
+#registerContainer .title {
+    padding-left: 10px;
+    display: inline;
+    color: #000;
+}
+
+#registerContainer .title span {
+    padding-left: 10px;
+    display: inline;
+    color: #43a051;
+}
+
+#registerContainer .title h2 {
+    display: inline;
+}
+#registerContainer .close-area {
+    display: inline;
+    cursor: pointer;
+    color: #000;
+    position: relative;
+    float: right;
+}
+
+#registerContainer .content {
+    margin-top: 20px;
+    padding: 0px 10px;
+    color: #000;
+}
+
+#registerContainer .content table {
+    margin-top: 20px;
+    padding: 0px 10px;
+    color: #000;
+    border-top: 2px solid #43a051;
+    width: 100%;
+}
+
+#registerContainer .content table .center{
+    text-align: center;
+    width: 150px;
+}
+
+#registerContainer .content table td{
+    padding: 10px 0;
+    border-bottom: 1px solid #f9f9f9;
+}
+#registerContainer .close-area {
+    display: inline;
+    cursor: pointer;
+    color: #000;
+    position: relative;
+    float: right;
+}

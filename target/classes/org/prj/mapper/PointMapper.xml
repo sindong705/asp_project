@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.prj.mapper.PointMapper">
+	
+	<!-- 포인트 적립 -->
+	<insert id="pointInsert" parameterType="org.prj.domain.PointVO">
+		<selectKey keyProperty="after_point" order="BEFORE" resultType="int">
+	        select nvl((select after_point from(select * from point where m_idx = #{m_idx} order by reg_date desc) where rownum=1),0)+ #{update_point} from dual
+	    </selectKey>
+		insert into point 
+		(
+			p_idx,
+			m_idx, 
+			content, 
+			update_point, 
+			reg_date, 
+			before_point, 
+			after_point
+		)
+			values 
+		(
+			seq_point.nextval, 
+			#{m_idx}, 
+			<choose>
+		        <when test='content.equals("join")'>
+		            '회원가입',
+		        </when>
+		        <when test='content.equals("payment")'>
+		            '결제',
+		        </when>
+		        <when test='content.equals("paymentCancel")'>
+		            '결제취소',
+		        </when>		        
+		        <when test='content.equals("refund")'>
+		            '환불',
+		        </when>		        
+		        <when test='content.equals("etc")'>
+		            '기타 : '|| #{contentDetail},
+		        </when>
+		    </choose>
+			#{update_point}, 
+			sysdate,
+			nvl((select after_point from(select * from point where m_idx = #{m_idx} order by reg_date desc) where rownum=1),0), 
+			nvl((select after_point from(select * from point where m_idx = #{m_idx} order by reg_date desc) where rownum=1),0)+ #{update_point}
+		)
+		
+	</insert>
+	
+	<!-- 포인트 리스트  -->
+	<select id="getPointList" parameterType="org.prj.domain.Criteria" resultType="org.prj.domain.PointVO"> 
+		<![CDATA[	
+		select p_idx, m_idx, id, after_point, before_point, update_point, content, reg_date, name 
+		from (select rownum rn, p_idx, m_idx, id, after_point, before_point, update_point, content, reg_date, name 
+		from (select a.p_idx, b.id, a.m_idx, a.after_point, a.before_point, a.update_point, a.content, a.reg_date, b.name
+			from point a, member b
+			where a.m_idx = b.m_idx
+			]]>
+			<if test='category != null or category != ""'>
+			<choose>
+		        <when test='category.equals("join")'>
+		            and to_char(a.content) = '회원가입'
+		        </when>
+		        <when test='category.equals("payment")'>
+		            and to_char(a.content) = '결제'
+		        </when>
+		        <when test='category.equals("paymentCancel")'>
+		            and to_char(a.content) = '결제취소'
+		        </when>		        
+		        <when test='category.equals("refund")'>
+		            and to_char(a.content) = '환불'
+		        </when>
+		        <when test='category.equals("etc")'>
+		            and to_char(a.content) like '%기타%'
+		        </when>
+		    </choose>
+		</if>
+		<if test='searchword != null or searchword != ""'>
+			<choose>
+		        <when test='searchcolumn.equals("id")'>
+		            and b.id LIKE '%' || #{searchword} || '%'
+		        </when>
+		        <when test='searchcolumn.equals("name")'>
+		            and b.name LIKE '%' || #{searchword} || '%'
+		        </when>
+		    </choose>
+		</if>
+		<![CDATA[
+			order by p_idx desc
+			)
+	       	where rownum <= #{pageNum} * #{amount} )
+	       	where rn > (#{pageNum}-1) * #{amount}	
+		]]>
+	</select>
+	
+	<!-- 게시글 전체 개수 -->
+	<select id="getPointTotal" parameterType="org.prj.domain.Criteria" resultType="int">
+		select count(*)
+		from point a, member b
+		where a.m_idx = b.m_idx
+		<if test='category != null or category != ""'>
+			<choose>
+		        <when test='category.equals("join")'>
+		            and to_char(a.content) = '회원가입'
+		        </when>
+		        <when test='category.equals("payment")'>
+		            and to_char(a.content) = '결제'
+		        </when>
+		        <when test='category.equals("paymentCancel")'>
+		            and to_char(a.content) = '결제취소'
+		        </when>		        
+		        <when test='category.equals("refund")'>
+		            and to_char(a.content) = '환불'
+		        </when>
+		        <when test='category.equals("etc")'>
+		            and to_char(a.content) like '%기타%'
+		        </when>
+		    </choose>
+		</if>
+		<if test='searchword != null or searchword != ""'>
+			<choose>
+		        <when test='searchcolumn.equals("id")'>
+		            and b.id LIKE '%' || #{searchword} || '%'
+		        </when>
+		        <when test='searchcolumn.equals("name")'>
+		            and b.name LIKE '%' || #{searchword} || '%'
+		        </when>
+		    </choose>
+		</if>
+		order by p_idx desc
+	</select>
+	
+	<!-- 최종 포인트 조회 -->
+	<select id="pointSearch" parameterType="String" resultType="org.prj.domain.PointVO">
+		select * from 
+		(select a.p_idx, b.id, a.m_idx, a.after_point, a.before_point, a.update_point, a.content, a.reg_date, b.name
+		    from point a, member b
+		    where a.m_idx = b.m_idx and b.id =  #{id} 
+		    order by reg_date desc) where rownum=1
+	</select>
+	
+	<!-- 환불 승인 -->
+	<insert id="doRefundApproval" parameterType="org.prj.domain.RefundVO">
+		<selectKey keyProperty="before_point" order="BEFORE" resultType="int">
+	        select point from member where m_idx=#{m_idx}
+	    </selectKey>
+	    
+		insert into point
+		values(seq_point.nextval, #{m_idx}, (#{before_point} + #{re_amount}), #{before_point}, #{re_amount}, '환불', sysdate)
+	</insert>
+	
+	<!-- 내 정보 변경 -->
+	<update id="updateMyinfo" parameterType="org.prj.domain.MemberVO">
+		update point set name=#{name} where m_idx=#{m_idx}
+	</update>
+	
+	<!-- 결제 시 포인트 등록 -->
+	<insert id="updatePoint" parameterType="org.prj.domain.PaymentVO">
+	    <selectKey keyProperty="before_point" order="BEFORE" resultType="int">
+	        select point from member where m_idx=#{m_idx}
+	    </selectKey>
+	    
+	    insert into point(
+	        p_idx,
+	        m_idx, 
+	        content, 
+	        reg_date, 
+	        update_point, 
+	        before_point, 
+	        after_point)
+	    values(seq_point.nextval, #{m_idx}, '결제', sysdate, (#{point}*-1), #{before_point}, (#{before_point} - #{point}))
+	</insert>
+	
+	<!-- 결제 취소 시 포인트 등록 -->
+	<insert id="pointCancel" parameterType="org.prj.domain.PaymentVO">
+		<selectKey keyProperty="before_point" order="BEFORE" resultType="int">
+	        select point from member where m_idx=#{m_idx}
+	    </selectKey>
+	    
+		insert into point(
+			p_idx,
+			m_idx, 
+			content, 
+			reg_date, 
+			update_point, 
+			before_point, 
+			after_point)
+		values(seq_point.nextval, #{m_idx}, '결제취소', sysdate, #{point}, #{before_point}, (#{before_point} + #{point}))
+	</insert>
+</mapper>	

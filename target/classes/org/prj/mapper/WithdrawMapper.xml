@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.prj.mapper.WithdrawMapper">
+	
+	<!-- 1. 출금신청 내용 불러오기  -->
+	<select id="getList" resultType="org.prj.domain.WithdrawVO">
+		select m_idx, w_idx, id, name, phone, with_method, with_amount, with_status, commission, reg_date, note
+		from(
+		select ROWNUM rn, m_idx, w_idx, id, name, phone, with_method, with_amount, with_status, commission, reg_date, note
+		from(select * from withdraw order by w_idx desc) order by w_idx desc) where m_idx = #{m_idx }
+	</select>
+
+	<!-- 2. 출금신청  -->
+	<insert id="insert" parameterType="org.prj.domain.WithdrawVO">
+			insert into withdraw( m_idx, w_idx, id, name, phone, with_method, 
+                  				  with_amount, with_status, commission, reg_date, note)
+			values(#{m_idx }, SEQ_WITHDRAW.nextval, #{id }, #{name }, #{phone }, #{with_method },
+       				 #{with_amount }, #{with_status }, 1000, sysdate, #{note })
+	</insert>
+	
+	<!-- 3. p_idx를 가지고와 판매 총액을 확인 / 상태값 B(결재완료) 된 내용만 가지고와서 총 판매합산 금액에 넣어주었다. -->
+	<select id="getp_idx" parameterType="String" resultType="int">
+ 		select sum(service_amount) from payment where (pay_status = 'B' or pay_status = 'C' or pay_status = 'E') and p_idx in(
+			select p_idx from party_board where id = #{username })
+			
+	</select>
+	
+	<!-- 4. 지금 요청 금액 -->
+	<select id="withamount" parameterType="String" resultType="int">
+		select sum(with_amount) from withdraw where m_idx = 
+		(select m_idx from member where id=#{username})
+		and with_status  = 'A'
+	</select>
+	
+	<!-- 5. 미발생 판매금 member에 업데이트-->	
+	<update id="unsales" parameterType="String">
+	    update member
+	    set with_amount = (
+	        SELECT (
+	            (SELECT SUM(service_amount / ROUND(end_date - TRUNC(approved_at)) * ROUND(TRUNC(SYSDATE) - TRUNC(approved_at))) 
+	             FROM payment 
+	             WHERE (pay_status = 'B' or pay_status = 'C' or pay_status = 'E') AND p_idx IN (SELECT p_idx FROM party_board WHERE id = #{username })
+	            )
+	            +
+	            (SELECT SUM(service_amount - refund_amount) 
+	             FROM payment 
+	             WHERE pay_status = 'F' AND p_idx IN (SELECT p_idx FROM party_board WHERE id = #{username })
+	            )
+	        ) AS result
+	        FROM dual
+	    )
+	    where id=#{username }
+	</update>
+
+	<!-- 6. 미발생 판매금 -->
+	<select id="unsaleslist" parameterType="String" resultType="int">
+		SELECT (
+		    (SELECT SUM(service_amount / ROUND(end_date - TRUNC(approved_at)) * ROUND(TRUNC(SYSDATE) - TRUNC(approved_at))) 
+		     FROM payment 
+		     WHERE (pay_status = 'B' or pay_status = 'C' or pay_status = 'E') AND p_idx IN (SELECT p_idx FROM party_board WHERE id = #{username })
+		    )
+		    +
+		    (SELECT SUM(service_amount - refund_amount) 
+		     FROM payment 
+		     WHERE pay_status = 'F' AND p_idx IN (SELECT p_idx FROM party_board WHERE id = #{username })
+		    )
+		) AS result
+		FROM dual
+	</select>
+	
+	<!-- 관리자 화면 부분  여기 아래부터 진행-->
+	
+	<!-- * 관리자 화면에서 출금신청 리스트를 가지고 오기 전에 카운팅  -->
+	<select id="getWithdrawTotal" parameterType="org.prj.domain.Criteria" resultType="int">
+		SELECT COUNT(*)
+		FROM withdraw
+		WHERE 1=1
+		<choose>
+	        <when test='status.equals("approval")'>
+	            and with_status='A'
+	        </when>
+	        <when test='status.equals("application")'>
+	            and with_status='B'
+	        </when>
+	        <when test='status.equals("Companion")'>
+	            and with_status='C'
+	        </when>
+	    </choose>
+	</select>
+	
+	<!-- * 관리자 화면에서 출금신청 리스트를 가지고 오기  -->
+	<select id="withdrawList" parameterType="org.prj.domain.Criteria" resultType="org.prj.domain.WithdrawVO">
+		select * from 
+		(select rownum rn, m_idx, w_idx, id, name, phone, with_method, with_amount, with_status, commission, reg_date, note
+		from 
+		(select m_idx, w_idx, id, name, phone, with_method, with_amount, with_status, commission, reg_date, note
+		from withdraw 
+		where 1=1
+		<choose>
+	        <when test='status.equals("approval")'>
+	            and with_status='A'
+	        </when>
+	        <when test='status.equals("application")'>
+	            and with_status='B'
+	        </when>
+	        <when test='status.equals("Companion")'>
+	            and with_status='C'
+	        </when>
+	    </choose>
+		order by w_idx desc)
+		<![CDATA[	
+		where ROWNUM <= #{pageNum} * #{amount})
+		where rn > (#{pageNum}-1) * #{amount}
+		]]>
+
+	</select>
+	
+	<!-- * 지금  금액은 with_status가 B로 변경된 값만 가지고 오면 된다.  -->
+	<select id="currentamount" parameterType="String" resultType="int">
+		select sum(with_amount) from withdraw where m_idx = 
+		(select m_idx from member where id=#{username})
+		and with_status  = 'B'
+	</select>
+	
+	<!-- * 관리자 화면에서 승인 버튼 누를 경우 with_status B로 변경  -->
+	<update id="modifyWithdraw" parameterType="int">
+		update withdraw
+		set
+			with_status = 'B'
+		where w_idx = #{w_idx }
+	</update>
+	
+	<!-- * 관리자 화면에서 승인 버튼 누를 경우 with_status C로 변경  -->
+	<update id="modifyWithdraw2" parameterType="int">
+		update withdraw
+		set
+			with_status = 'C'
+		where w_idx = #{w_idx }
+	</update>
+
+	<!-- * 새 출금신청 -->
+	<select id="getNewWithdraw" resultType="int">
+		select count(*) from withdraw where with_status='A'
+	</select>
+
+	<!-- * 내 정보 수정 -->
+	<update id="updateMyinfo" parameterType="org.prj.domain.MemberVO">
+		update withdraw set name=#{name}, phone=#{phone} where m_idx=#{m_idx}
+	</update>
+</mapper>

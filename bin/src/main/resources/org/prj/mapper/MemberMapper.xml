@@ -1,0 +1,369 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.prj.mapper.MemberMapper">
+
+	<resultMap type="org.prj.domain.MemberVO" id="memberMap">
+		<result property="m_idx" column="m_idx"/>
+		<result property="id" column="id"/>
+		<result property="password" column="password"/>
+		<result property="name" column="name"/>
+		<result property="email" column="email"/>
+		<result property="phone" column="phone"/>
+		<result property="level" column="level"/>
+		<result property="nickname" column="nickname"/>
+		<result property="reg_date" column="reg_date"/>
+		<result property="status" column="status"/>
+		<result property="point" column="point"/>
+		<result property="bank" column="bank"/>
+		<result property="bank_number" column="bank_number"/>
+		<result property="with_amount" column="with_amount"/>
+		<result property="kakaoid" column="kakaoid"/>
+		<result property="naverid" column="naverid"/>
+		<collection property="authList" resultMap="authMap"></collection>
+	</resultMap>
+	
+	
+	<resultMap type="org.prj.domain.AuthVO" id="authMap">
+		<result property="id" column="id"/>
+		<result property="auth" column="auth"/>
+	</resultMap>
+	
+	<!-- 로그인 security -->
+	<select id="memberRead" resultMap="memberMap">
+		select m_idx, id, password, name, email, phone, nickname, point, reg_date, status, "LEVEL", bank, bank_number, with_amount, auth, naverid, kakaoid, token from member where id = #{id} and status = 'N'
+	</select>
+	
+	<!-- 회원가입 -->
+	<insert id="memberJoin" parameterType="org.prj.domain.MemberVO">
+		<selectKey keyProperty="m_idx" order="BEFORE" resultType="int">
+	        select seq_member.nextval from dual
+	    </selectKey>
+		insert into member 
+		(
+			M_IDX, 
+			id, 
+			password, 
+			name, 
+			email, 
+			phone, 
+			"LEVEL", 
+			nickname, 
+			REG_DATE, 
+			UPDATE_DATE, 
+			status, 
+			point,
+			token,
+			kakaoid,
+			naverid
+		)
+			values 
+		(
+			#{m_idx}, 
+			#{id}, 
+			#{password}, 
+			#{name}, 
+			#{email}, 
+			#{phone}, 
+			'C', 
+			#{nickname}, 
+			sysdate, 
+			sysdate, 
+			'N', 
+			'500',
+			#{token, jdbcType=VARCHAR},
+			#{kakaoid, jdbcType=VARCHAR},
+			#{naverid, jdbcType=VARCHAR}
+		)
+	</insert>
+	
+	<!-- 아이디 중복 검사 -->
+	<select id="idCheck" resultType="int">
+		select count(*) from member where id = #{id} and status = 'N'
+	</select>
+	
+	<!-- 닉네임 중복 검사 -->
+	<select id="nicknameCheck" resultType="int">
+		select count(*) from member where nickname = #{nickname} and status = 'N'
+	</select>
+	
+	<!-- 이메일 중복 검사 -->
+	<select id="emailCheck" resultType="int">
+		select count(*) from member where email = #{email} and status = 'N'
+	</select>
+	
+	<!-- 아이디 찾기 -->
+	<select id="findId" parameterType="String" resultType="String">
+		select id from member where name = #{name} and email = #{email} and status = 'N'
+	</select>	
+	
+	<!-- 비밀번호 찾기 (이메일, 아이디 일치) -->
+	<select id="findPw" parameterType="String" resultType="org.prj.domain.MemberVO">
+		select * from member where email = #{email} and id = #{id} and status = 'N'
+	</select>
+	
+	<!-- 패스워드변경 -->
+	<update id = "updatePw" parameterType="org.prj.domain.MemberVO">
+		update member set password = #{password} where email = #{email} and id = #{id} and status = 'N'
+	</update>
+	
+	<!-- 내 정보 수정 -->
+	<update id="updateMypage" parameterType="org.prj.domain.MemberVO">
+		update member set 
+			password = #{password}, 
+			email = #{email}, 
+			name = #{name},
+			phone = #{phone} 
+		where id = #{id} and status = 'N'
+	</update>
+	
+	<!--  파트너 신청  -->
+	<update id="partnerApp" parameterType="org.prj.domain.MemberVO"> 
+		update member set "LEVEL" = 'B', auth = 'ROLE_PARTNER', bank = #{bank}, bank_number = #{bank_number} where name = #{name} and phone = #{phone} 
+	</update>
+	
+	<!--  파트너 정보수정  -->
+	<update id="partnerModify" parameterType="org.prj.domain.MemberVO"> 
+		update member set bank = #{bank}, bank_number = #{bank_number} where name = #{name} and phone = #{phone} 
+	</update>
+	
+	<!--  파트너 정보조회  -->
+	<select id="getPartnerinfo" parameterType="int" resultType="org.prj.domain.MemberVO"> 
+		select * from member where m_idx = #{m_idx} 		
+	</select>
+	
+	<!-- withamount 업데이트 -->
+	<update id="updateWithamount" parameterType="org.prj.domain.MemberVO">
+		update member set with_amount = (with_amount + #{serviceamount}) where id=#{id}
+	</update>
+	
+	<!-- point 업데이트 -->
+	<update id="updatePoint" parameterType="org.prj.domain.PaymentVO">
+		update member set point = (point - #{point}) where m_idx=#{m_idx}
+	</update>
+	
+	<!-- point 반환 -->
+	<update id="pointCancel" parameterType="org.prj.domain.PaymentVO">
+		update member set point = (point + #{point}) where m_idx=#{m_idx}
+	</update>
+	
+	<!-- 카카오 회원가입 -->
+	<select id="kakaoIdck" parameterType="String" resultType="int">
+		select count(*) from member where kakaoid = #{kakaoid}
+	</select>
+	
+	<!-- 카카오 로그인 -->
+	<select id="kakaoRead" parameterType="String" resultMap="memberMap">
+		select m_idx, id, password, name, email, phone, nickname, point, reg_date, status, "LEVEL", bank, bank_number, with_amount, auth, naverid, kakaoid, token from member where kakaoid = #{kakaoid} and status = 'N' 
+	</select>
+	
+	<!-- 회원가입 중복확인 -->
+	<select id="joinCheck" parameterType="String" resultType="int">
+		select count(*) from member where name = #{name} and phone = #{phone}
+	</select>
+	
+	<!-- 회원번호 찾기 -->
+	<select id="findMidx" parameterType="String" resultType="int">
+		select m_idx from member where id = #{id} 
+	</select>
+	<!-- 네이버 회원가입 -->
+	<select id="naverIdck" parameterType="String" resultType="int">
+		select count(*) from member where naverid = #{naverid}
+	</select>
+	
+	<!-- 네이버 로그인 -->
+	<select id="naverRead" parameterType="String" resultMap="memberMap">
+		select m_idx, id, password, name, email, phone, nickname, point, reg_date, status, "LEVEL", bank, bank_number, with_amount, auth, naverid, kakaoid, token from member where naverid = #{naverid} and status = 'N' 
+	</select>
+	
+	<!-- 카카오 SNS 계정 연결 -->
+	<update id="kakao_update" parameterType="org.prj.domain.MemberVO">
+		update member set kakaoid = #{kakaoid} where id = #{id}
+	</update>
+	
+	<!-- 네이버 SNS 계정 연결 -->
+	<update id="naver_update" parameterType="org.prj.domain.MemberVO">
+		update member set naverid = #{naverid} where id = #{id}
+	</update>
+	
+	<!-- 총 회원수 -->
+	<select id="getTotalUser" resultType="int">
+		select count(*) from member
+	</select>
+	
+	<!-- 회원관리 - 검색 - 회원 수 -->
+	<select id="getMemberTotal" parameterType="org.prj.domain.Criteria" resultType="int">
+		select count(*)
+		from member
+		where 1=1
+		<choose>
+	        <when test='status.equals("N")'>
+	            and status = 'N'
+	        </when>
+	        <when test='status.equals("Y")'>
+	            and status = 'Y'
+	        </when>
+	    </choose>
+		<choose>
+	        <when test='category.equals("C")'>
+	            and "LEVEL" = 'C'
+	        </when>
+	        <when test='category.equals("B")'>
+	            and "LEVEL" = 'B'
+	        </when>
+	        <when test='category.equals("A")'>
+	            and "LEVEL" = 'A'
+	        </when>
+	    </choose>
+		<if test='searchword != null or searchword != ""'>
+			<choose>
+		        <when test='searchcolumn.equals("m_idx")'>
+		            and m_idx LIKE '%' || #{searchword} || '%'
+		        </when>
+		        <when test='searchcolumn.equals("id")'>
+		            and LOWER(id) LIKE '%' || #{searchword} || '%'
+		        </when>
+		        <when test='searchcolumn.equals("name")'>
+		            and LOWER(name) LIKE '%' || #{searchword} || '%'
+		        </when>
+		        <when test='searchcolumn.equals("nickname")'>
+		            and LOWER(nickname) LIKE '%' || #{searchword} || '%'
+		        </when>
+		    </choose>
+		</if>
+	</select>
+	
+	<!-- 회원 관리 - 검색 - 회원 리스트 -->
+	<select id="getAdminMemberList" parameterType="org.prj.domain.Criteria" resultType="org.prj.domain.MemberVO">
+		select * from
+		(select rownum rn, m_idx, id, password, name, email, phone, "LEVEL", nickname, reg_date, update_date, status, point, bank, bank_number,
+				with_amount, auth, kakaoid, naverid
+		from
+		(select m_idx, id, password, name, email, phone, "LEVEL", nickname, reg_date, update_date, status, point, bank, bank_number,
+				with_amount, auth, kakaoid, naverid
+		from member
+		where 1=1
+		<choose>
+	        <when test='status.equals("N")'>
+	            and status = 'N'
+	        </when>
+	        <when test='status.equals("Y")'>
+	            and status = 'Y'
+	        </when>
+	    </choose>
+		<choose>
+	        <when test='category.equals("C")'>
+	            and "LEVEL" = 'C'
+	        </when>
+	        <when test='category.equals("B")'>
+	            and "LEVEL" = 'B'
+	        </when>
+	        <when test='category.equals("A")'>
+	            and "LEVEL" = 'A'
+	        </when>
+	    </choose>
+		<if test='searchword != null or searchword != ""'>
+			<choose>
+		        <when test='searchcolumn.equals("m_idx")'>
+		            and m_idx LIKE '%' || #{searchword} || '%'
+		        </when>
+		        <when test='searchcolumn.equals("id")'>
+		            and LOWER(id) LIKE '%' || #{searchword} || '%'
+		        </when>
+		        <when test='searchcolumn.equals("name")'>
+		            and LOWER(name) LIKE '%' || #{searchword} || '%'
+		        </when>
+		        <when test='searchcolumn.equals("nickname")'>
+		            and LOWER(nickname) LIKE '%' || #{searchword} || '%'
+		        </when>
+		    </choose>
+		</if>
+		order by m_idx desc)
+		<![CDATA[	
+		where rownum <= #{pageNum} * #{amount})
+		where rn > (#{pageNum}-1) * #{amount}
+		]]>
+	</select>
+	
+	<!-- 회원 정보 가져오기 -->
+	<select id="getMember" parameterType="int" resultType="org.prj.domain.MemberVO">
+		select * from member where m_idx=#{m_idx}
+	</select>
+	
+	<!-- 네이버 연동 해지 -->
+	<update id="doNaveridDelete" parameterType="int">
+		update member set naverid=null where m_idx=#{m_idx}
+	</update>
+	
+	<!-- 카카오 연동 해지 -->
+	<update id="doKakaoidDelete" parameterType="int">
+		update member set kakaoid=null where m_idx=#{m_idx}
+	</update>
+	
+	<!-- 회원 정보 수정 -->
+	<update id="doMemberModify" parameterType="org.prj.domain.MemberVO">
+		update member set name=#{name}, phone=#{phone}, email=#{email}, "LEVEL"=#{level}, bank=#{bank}, bank_number=#{bank_number},
+							with_amount=#{with_amount}, point=#{point}, 
+							<choose>
+						        <when test='level.equals("A")'>
+						            auth='ROLE_ADMIN'
+						        </when>
+						        <when test='level.equals("B")'>
+						            auth='ROLE_PARTNER'
+						        </when>
+						        <when test='level.equals("C")'>
+						            auth='ROLE_USER'
+						        </when>
+						    </choose>
+		where m_idx=#{m_idx}
+	</update>
+	
+	<!-- 계정 활성화/비활성화 -->
+	<update id="doLockAccount" parameterType="org.prj.domain.MemberVO">
+		<choose>
+	        <when test='status.equals("N")'>
+	            update member set status='Y' where m_idx=#{m_idx}
+	        </when>
+	        <otherwise>
+	            update member set status='N' where m_idx=#{m_idx}
+	        </otherwise>
+	    </choose>
+	</update>
+	
+	<!-- 환불 승인 -->
+	<update id="doRefundApproval" parameterType="org.prj.domain.RefundVO">
+		update member set point=(point + #{re_amount}) where m_idx=#{m_idx}
+	</update>
+	
+	<!-- 업데이트 마이 포인트 -->
+	<update id="updateMyPoint" parameterType="org.prj.domain.PointVO">
+		update member set point=#{after_point} where m_idx=#{m_idx}
+	</update>
+	
+	<!-- 포인트 리스트  -->
+	<select id="getPointList" parameterType="org.prj.domain.Criteria" resultType="org.prj.domain.PointVO"> 
+		<![CDATA[	
+		select p_idx, m_idx, after_point, before_point, update_point, content, reg_date
+		from (select rownum rn, p_idx, m_idx, after_point, before_point, update_point, content, reg_date 
+		from (select a.p_idx, a.m_idx, a.after_point, a.before_point, a.update_point, a.content, a.reg_date
+			from point a, member b
+			where a.m_idx = b.m_idx and a.m_idx = #{m_idx}
+			]]>
+		<![CDATA[
+			order by p_idx desc
+			)
+	       	where rownum <= #{pageNum} * #{amount} )
+	       	where rn > (#{pageNum}-1) * #{amount}	
+		]]>
+	</select>
+	
+	<!-- 게시글 전체 개수 -->
+	<select id="getPointTotal" parameterType="org.prj.domain.Criteria" resultType="int">
+		select count(*)
+		from point a, member b
+		where a.m_idx = b.m_idx and a.m_idx = #{m_idx}
+		order by p_idx desc
+	</select>
+	
+</mapper>	

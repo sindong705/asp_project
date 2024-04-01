@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.prj.mapper.InquiryReplyMapper">
+	
+	<!-- 1. 댓글 삽입 -->
+	<insert id="insert" parameterType="org.prj.domain.InquiryCommentVO">
+		INSERT INTO inquiry_comment(c_idx, i_idx, content, status, writer, reg_date)
+		VALUES(
+			SEQ_COMMENT.NEXTVAL,
+			#{i_idx },
+			#{content },
+			#{status },
+			#{writer },
+			sysdate					
+		)
+	</insert>
+	
+	<!-- 2. 댓글 목록 -->
+	<select id="getList" resultType="org.prj.domain.InquiryCommentVO">
+		SELECT * FROM inquiry_comment WHERE I_IDX = #{i_idx }
+		ORDER BY C_IDX DESC
+	</select>
+	
+	<!-- 3. 댓글 읽기(조회) -->
+	<select id="read" parameterType="int" resultType="org.prj.domain.InquiryCommentVO">
+		SELECT * FROM inquiry_comment WHERE C_IDX = #{c_idx }
+	</select>
+	
+	<!-- 4. 댓글 삭제 -->
+	<delete id="delete" parameterType="int">
+		DELETE FROM inquiry_comment WHERE C_IDX = #{c_idx }
+	</delete>
+	
+	<!-- 5. 댓글 수정 -->
+	<update id="update" parameterType="org.prj.domain.InquiryCommentVO">
+		UPDATE inquiry_comment
+		SET
+			CONTENT = #{content },
+			UPDATE_DATE = sysdate
+		WHERE
+			C_IDX = #{c_idx }	
+	</update>
+	
+	<!-- 6. 관리자에서 게시글 삭제 전 댓글 삭제 -->
+	<delete id="allDelete" parameterType="int">
+		DELETE FROM inquiry_comment WHERE i_IDX = #{i_idx }
+	</delete>
+	
+</mapper>
+

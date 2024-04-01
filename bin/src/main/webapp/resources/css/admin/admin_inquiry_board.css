@@ -1,0 +1,185 @@
+#content-container {
+	margin: auto;
+	width: 1200px;
+	margin-top: 50px;
+	margin-bottom: 80px;	
+}
+
+#category{
+	width: 130px;
+	display: inline;
+	font-size: 13px;
+}
+
+#detailSearch{
+	width: 130px;
+	display: inline;
+	font-size: 13px;
+}
+
+#search, #reset {
+	font-size: 14px;
+	border-radius: 10px;
+	width: 90px;
+	height: 32px;
+	background-color: #006D77;
+	color: white;
+	border: 0;
+}
+
+#reset{
+	background-color: #333;
+}
+
+#inquiryboardList{
+	margin-top: 30px;
+	border-top: 1px solid #333333;
+	border-bottom: 1px solid #ececec;
+}
+
+#inquiryboardList table {
+	text-align: center;
+	width : 100%;
+}
+
+#inquiryboardList table th {
+	padding: 18px 0;
+	font-size: 14px;
+	font-weight: bold;
+	color: #333333;
+	background-color: #f9f9f9;
+}
+
+#inquiryboardList table td {
+	padding: 15px 0;
+	font-size: 14px;
+	font-weight: 500;
+	color: #333;
+	line-height: 16px;
+	border-top: 1px solid #ececec;
+}
+
+#inquiryboardList{
+	margin-top: 10px;
+	border-top: 1px solid #333333;
+    border-bottom: 1px solid #ececec;
+}
+
+#inquiryboardList table{
+	text-align: center;
+	width: 100%;
+}
+
+#inquiryboardList table th{
+	padding: 18px 0;
+	font-size: 14px;
+	font-weight: bold;
+	color: #333333;
+	background-color: #f9f9f9;
+}
+
+#inquiryboardList table td{
+	padding: 15px 0;
+	font-size: 14px;
+	font-weight: 500;
+	color: #333;
+	line-height: 16px;
+	border-top: 1px solid #ececec;
+}
+
+#replyanswer{
+	font-size: 12px;
+	color: white;
+    border-radius: 5px;
+    border: 0px;
+    width: 35px;
+    height: 25px;
+    background-color: #f6c23e;
+}
+
+#deleteBtn{
+	font-size: 12px;
+	color: white;
+    border-radius: 5px;
+    border: 0px;
+    width: 35px;
+    height: 25px;
+    background-color: red;
+}
+
+#updateReply{
+	font-size: 12px;
+	color: white;
+    border-radius: 5px;
+    border: 0px;
+    width: 35px;
+    height: 25px;
+    background-color: green;
+}
+
+#partymodify, #partydelete{
+	font-size: 13px;
+}
+
+/* 페이징 */
+.page-nation li{
+	list-style: none;
+}
+
+.page-wrap{
+	text-align: center;
+	font-size: 0;
+}
+.page-nation {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-top: 35px;
+}
+
+.page-nation a{
+	display: block;
+	margin: 0 3px;
+	flex: left;
+	border: 1px solid #e6e6e6;
+	border-radius: 10px;
+	width: 28px;
+	height: 28px;
+	line-height: 28px;
+	text-align: center;
+	background-color: #fff;
+	font-size: 13px;
+	color: black;
+	text-decoration: none;
+}
+.page-nation a.active{
+	background-color: #006D77;
+	color: #fff;
+}
+.page-nation a:hover{
+	background-color: #006D77;
+	color: #fff;
+} 
+
+
+/* 처리결과 색상 3가지 내용은 나중에 변경한다. [대기, 완료, 확인중] [대기중, 처리완료, 확인중] */
+.word-color1 {
+	color: red;
+}
+
+.word-color2 {
+	color: green;
+}
+
+.word-color3 {
+	color: blue;
+}
+
+.word-color4 {
+	color: blueviolet;
+}
+
+.word-color5 {
+	color: cornflowerblue;
+}
+

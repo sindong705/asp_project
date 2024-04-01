@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.prj.mapper.AlarmMapper">
+	<insert id="doSaveNotify" parameterType="org.prj.domain.AlarmVO">
+		insert into alarm
+		values(seq_alarm.nextval, #{to_id}, #{from_id}, #{content}, 'N', #{url}, sysdate)
+	</insert>
+	
+	<select id="getMyNotify" parameterType="org.prj.domain.Criteria" resultType="org.prj.domain.AlarmVO">
+		select * from
+			(select rownum rn, a_idx, to_id, from_id, content, checked, url, reg_date
+			from
+				(select a_idx, to_id, from_id, content, checked, url, reg_date from alarm where to_id=#{id} order by a_idx desc)
+		<![CDATA[
+			where rownum <= #{pageNum} * 15)
+		where rn > (#{pageNum}-1) * 15
+		]]>
+	</select>
+	
+	<update id="doChangeStatus" parameterType="int">
+		update alarm set checked='Y' where a_idx=#{a_idx}
+	</update>
+	
+	<select id="getMyNotifyNum" parameterType="String" resultType="int">
+		select count(*) from alarm where to_id=#{id} and checked='N'
+	</select>
+	
+	<delete id="doCheckAlarm" parameterType="Integer">
+		update alarm set checked='Y' where a_idx IN
+		<foreach collection="list" item="item" open="(" separator="," close=")">
+        #{item}
+    	</foreach>
+	</delete>
+	
+	<delete id="doDeleteAlarm" parameterType="Integer">
+		delete from alarm where a_idx IN
+		<foreach collection="list" item="item" open="(" separator="," close=")">
+        #{item}
+    	</foreach>
+	</delete>
+</mapper>

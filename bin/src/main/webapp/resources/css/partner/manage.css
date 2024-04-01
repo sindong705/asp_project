@@ -1,0 +1,130 @@
+#service-container {
+	margin: auto;
+	width: 1200px;
+	margin-top: 50px;
+	margin-bottom: 80px;
+}
+
+#party-search select {
+	width: 170px;
+	display: inline;
+	font-size: 13px;
+}
+
+#party-search input[type="text"] {
+	width: 500px;
+	font-size: 13px;
+	display: inline;
+}
+
+#party-search input[type="button"] {
+	font-size: 15px;
+	border-radius: 10px;
+	width: 120px;
+	height: 32px;
+	background-color: #43a051;
+	color: white;
+	border: 0;
+}
+
+#party-search input[type="button"]#makeparty {
+	background-color: #258e75;
+}
+
+#party-search {
+	border-radius: 20px;
+	height: 80px;
+	border: 1px solid #43a051;
+	text-align: center;
+	padding-top: 22px;
+	margin-bottom: 30px;
+}
+
+#party-tab-title {
+	font-size: 25px;
+	margin-bottom: 20px;
+}
+
+#sorttap {
+	width: 100%;
+	display: block;
+	text-align: right;
+}
+
+#sorttap a {
+	margin-left: 30px;
+	color: #666;
+    font-weight: 500;
+}
+
+#sorttap a:hover {
+	color: #43a051;
+}
+
+#partylist {
+	margin-top: 10px;
+	border-top: 1px solid #333333;
+	border-bottom: 1px solid #ececec;
+}
+
+#partylist table {
+	text-align: center;
+	width: 100%;
+}
+
+#partylist table th {
+	padding: 18px 0;
+	font-size: 14px;
+	font-weight: bold;
+	color: #333333;
+	background-color: #f9f9f9;
+}
+
+#partylist table td {
+	padding: 15px 0;
+	font-size: 14px;
+	font-weight: 500;
+	color: #333;
+	line-height: 16px;
+	border-top: 1px solid #ececec;
+}
+
+#partymodify, #partydelete, #replyanswer, #answerRegister {
+	font-size: 12px;
+	color: white;
+    border-radius: 5px;
+    border: 0px;
+    width: 35px;
+    height: 25px;
+}
+
+#partymodify, #replyanswer, #answerRegister {
+	background-color: #43a051;
+}
+
+#partydelete {
+	background-color: #ea0540;
+}
+
+.colwidth{
+	width: 140px;
+}
+
+.datecolwidth{
+	width: 190px;
+}
+
+.titlecolwidth{
+	width: 240px;
+}
+
+.ellipsis{
+	white-space: nowrap;
+  	overflow: hidden;
+  	text-overflow: ellipsis;
+  	max-width: 200px;
+}
+
+.activeFont{
+	color: #43a051 !important;
+}

@@ -1,0 +1,106 @@
+.radio{
+	margin-bottom: 10px;
+	font-size: 15px;
+}
+
+#faqlist {
+	margin-top: 30px;
+	border-top: 1px solid #333333;
+	border-bottom: 1px solid #ececec;
+}
+
+#faqlist table {
+	text-align: center;
+	width : 100%;
+}
+
+#faqlist table th {
+	padding: 18px 0;
+	font-size: 14px;
+	font-weight: bold;
+	color: #333333;
+	background-color: #f9f9f9;
+}
+
+#faqlist table td {
+	padding: 15px 0;
+	font-size: 14px;
+	font-weight: 500;
+	color: #333;
+	line-height: 16px;
+	border-top: 1px solid #ececec;
+}
+
+#partymodify, #partydelete, #partyclose, #partyopen{
+	font-size: 12px;
+	color: white;
+    border-radius: 5px;
+    border: 0px;
+    width: 35px;
+    height: 25px;
+    background-color: #f6c23e;
+}
+
+#partyclose, #partyopen{
+	background-color: #006D77;
+}
+
+#partydelete{
+	background-color: #ea0540;
+}
+
+.faqRegister {
+    border-radius: 0.375rem;
+    width: 80px;
+    height: 32px;
+    background-color: #006D77;
+    color: white;
+    display: inline-block;
+    text-align: center;
+    line-height: 32px;
+}
+
+.faqRegister:hover {
+	color: white;
+	text-decoration: none;
+}
+
+/* 페이징 */
+.page-nation li{
+	list-style: none;
+}
+
+.page-wrap{
+	text-align: center;
+	font-size: 0;
+}
+.page-nation {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-top: 35px;
+}
+
+.page-nation a{
+	display: block;
+	margin: 0 3px;
+	flex: left;
+	border: 1px solid #e6e6e6;
+	border-radius: 10px;
+	width: 28px;
+	height: 28px;
+	line-height: 28px;
+	text-align: center;
+	background-color: #fff;
+	font-size: 13px;
+	color: black;
+	text-decoration: none;
+}
+.page-nation a.active{
+	background-color: #006D77;
+	color: #fff;
+}
+.page-nation a:hover{
+	background-color: #006D77;
+	color: #fff;
+}

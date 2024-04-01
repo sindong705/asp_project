@@ -1,0 +1,71 @@
+#modal {
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4);
+  display: none;
+}
+.modal-contents {
+  background-color: #fefefe;
+  margin: 15% auto;
+  padding: 20px;
+  border: 8px solid #dadcc2;
+  width: 475px;
+}
+.modal-footer{
+   text-align: right;
+}
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+.close:hover, .close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+.modal-titles{
+   font-weight: bold;
+   text-align: center;
+   font-size: 20px;
+}
+.modal-font{
+   font-weight: bold;
+   font-size: 15px;   
+}
+.modal-body .chats {
+	text-align: center;
+}
+
+.modal-body .chats li{
+   border: 0;
+   list-style-type: none;
+}
+.modal-body .chats li p{
+   margin: 0;
+   list-style-type: none;
+}
+.show{
+   display: inline-block;
+}
+.hide{			/* hide 클래스를 부여하는... */
+   display: none;
+}
+
+#modal input[name="name"], input[name="with_amount"], input[name="with_method"]{
+	width: 350px;
+	height: 40px;
+	font-size: 13px;
+	display: inline;
+	border-radius:5px;
+}
+
+p{
+	font-size: smaller;
+}

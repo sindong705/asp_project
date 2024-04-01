@@ -1,0 +1,108 @@
+#service-container {
+	margin: auto;
+	width: 1200px;
+	margin-top: 50px;
+	margin-bottom: 80px;
+}
+
+#form-container {
+	border-top: 1px solid #43a051;
+    padding-top: 15px;
+}
+
+#party-tab-title {
+	font-size: 25px;
+    margin-bottom: 20px;
+}
+
+#registerform {
+	font-size: 13px;
+}
+
+#registerform select {
+	width: 170px;
+	display: inline;
+	font-size: 13px;
+}
+
+#registerform input[name="title"] {
+	width: 480px;
+	font-size: 13px;
+}
+
+#registerform input[name="share_id"], input[name="share_pw"], input[name="phone"]
+	{
+	width: 240px;
+	font-size: 13px;
+	display: inline;
+}
+
+#registerform input[name="start_date"], input[name="end_date"], input[name="price"]
+	{
+	width: 200px;
+	font-size: 13px;
+	display: inline;
+}
+
+#priceCheck, #periodCheck {
+	font-size: 13px;
+	border-radius: 20px;
+	margin-left: 10px;
+	padding: 2px 9px;
+	background-color: #43a051;
+    color: white;
+    border: 0;
+}
+
+#registerform label {
+	margin-right: 10px;
+}
+
+#registerform textarea {
+	resize: none;
+	height: 200px;
+	font-size: 13px;
+}
+
+#periodCheckResult, #totalpriceResult {
+	margin-left: 10px;
+	color: #43a051;
+    font-weight: 600;
+}
+
+#registertable th, td {
+	padding-bottom: 15px;
+}
+
+#registertable th {
+	padding-right: 30px;
+}
+
+#registerBtn {
+	text-align: center;
+}
+
+#myPartyList, #myPartyRegister, #myPartyModify {
+	width: 150px;
+	height: 50px;
+	font-size: 15px;
+	color: white;
+    border-radius: 5px;
+    border: 0px;
+}
+
+#myPartyRegister, #myPartyModify {
+    background-color: #43a051;
+}
+
+#myPartyRegister:hover, #myPartyModify:hover {
+    background-color: #FFE05C;
+}
+
+#myPartyList {
+    background-color: #333;
+}
+
+#myPartyList:hover {
+	background-color: #111;
+}

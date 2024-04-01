@@ -1,0 +1,159 @@
+/* privacy.jsp, provision.jsp */
+.page-content {
+	line-height: 22px;
+    word-break: keep-all;
+    word-wrap: break-word;
+    text-align: center;
+}
+
+.title {
+	position: relative;
+    margin-top: 60px;
+    margin-bottom: 30px;
+    font-size: 22px;
+    font-weight: 600;
+    color: #333333;
+    line-height: 32px;
+}
+
+.title-point {
+	color: #43a051;
+}
+
+.page-wrap .article-title {
+	color: #258e75;
+    font-weight: bold;
+    padding-top: 30px;
+    padding-bottom: 10px;
+}
+
+.page-wrap ol {
+	margin-top: 0px;
+    margin-bottom: 0px;
+    list-style-type: decimal;
+    padding-left: 40px;
+}
+
+.page-wrap ol > li > ol li {
+	list-style: disc;
+}
+
+.text-box {
+	font-size: 14px;
+}
+
+/* partner.jsp */
+.application {
+	max-width: 700px;
+	margin: 0 auto;
+    padding: 40px 30px;
+    background-color: white;
+    box-shadow: 0px 2px 6px 0 rgba(0, 0, 0, 0.15);
+    text-align: center;
+}
+
+.app-title {
+	margin-top: 0;
+    margin-bottom: 24px;
+    font-size: 22px;
+    color: #333333;
+    line-height: 32px;
+}
+
+.app-form {
+	padding: 0 100px;
+}
+
+.app-form li {
+	position: relative;
+	padding: 2px 0 2px 120px;
+	list-style: none;
+}
+
+.app-form label {
+	display: inline-block;
+    margin-bottom: 5px;
+    font-weight: 600;
+    font-size: 14px;
+}
+	
+.app-form .subject {
+	position: absolute;
+    top: 0;
+    left: 0;
+    display: inline-block;
+    width: 120px;
+    padding: 8px 0;
+    font-size: 14px;
+    color: #333333;
+    vertical-align: top;
+}
+
+.application .caution {
+    margin-top: 25px;
+    padding: 20px;
+    font-size: 14px;
+    font-weight: 400;
+    color: #666666;
+    background-color: #f6f6f6;
+} 
+
+.application .caution ul {
+    padding-left: 10px;
+    list-style: "- ";
+}
+
+.application .input-check input[type='checkbox'] + label {
+    margin-bottom: 0;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.application .input-check input[type='checkbox'] {
+    width: 18px;
+    height: 18px;
+    vertical-align: middle;
+}
+
+.app-form input[readonly] {
+	background-color: #ececec;
+}
+
+.app-form input[type='text'] {
+	height: 36px;
+	padding: 0 15px;
+    font-size: 14px;
+    color: #333;
+    border: solid 1px #dddddd;
+    outline: none;
+}
+
+.app-form select {
+    height: 38px;
+    padding: 0 10px;
+    font-size: 14px;
+    color: #333;
+    border: solid 1px #dddddd;
+    background-color: white;
+}
+
+.app-button {
+	margin-top: 30px;
+}
+
+.app-button button {
+	padding: 0 20px;
+	min-width: 100px;
+    height: 50px;
+    font-size: 16px;
+    border: 0px;
+    background-color: #43a051;
+    color: white;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.app-button button:hover {
+	background-color: #FFE05C;
+}

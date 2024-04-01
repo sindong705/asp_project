@@ -1,0 +1,136 @@
+.video-container {
+	position: relative;
+    width: calc(100% + 26px);
+    margin-left: -13px;
+    margin-top: -13px;
+    font-size: 0;
+}
+
+.video-box {
+	position: relative;
+    display: inline-block;
+    width: calc(25% - 26px);
+    margin: 13px;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.video-box img {
+	width: 100%;
+}
+
+.form-box {
+	width: 100%;
+	margin-bottom: 30px;
+}
+
+.form-box form {
+	text-align: right;
+}
+
+.form-box form .form-select {
+	width: 170px;
+    display: inline;
+    font-size: 13px;
+    padding: 0.375rem 2.25rem 0.375rem 0.75rem;
+    font-weight: 400;
+    line-height: 1.5;
+    border-radius: 0.375rem;
+    border: 1px solid #dee2e6;
+}
+
+.form-box form input[type="text"] {
+	width: 300px;
+    display: inline;
+    font-size: 13px;
+}
+
+.form-box form input[type="button"] {
+    font-size: 15px;
+    border-radius: 0.375rem;
+    width: 80px;
+    height: 32px;
+    background-color: #006D77;
+    color: white;
+    border: 0;
+}
+
+.tip.btn {
+	width: 30px;
+	height: 30px;
+    background-color: #43a051;
+    border-color: #43a051;
+    padding: 0;
+    border-radius: 20px;
+    margin-bottom: 2px;
+    position: relative;
+}
+
+.tooltip {
+	left: 18px !important;
+}
+
+.tooltip-inner {
+	white-space: pre-wrap;
+}
+
+.tooltip > .tooltip-inner {
+	text-align: left;
+	max-width: none;
+}
+
+.modal-dialog {
+	max-width: 1200px !important;
+}
+
+.modal-content {
+	background-color: transparent !important;
+	border: none !important;
+}
+
+.modal-body {
+	padding-bottom: 56.25% !important; /* 16:9 */
+    height: 0;
+}
+
+.modal-body iframe {
+	position: absolute;
+    top: 0;
+    left: 0;
+	width: 100%;
+  	height: 100%;
+}
+
+.modal-header {
+	padding: 0 !important;
+	border-bottom: none !important;
+	justify-content: flex-end !important;
+}
+
+.fa-xmark:before {
+	content: "\f00d";
+}
+
+.video-close {
+	color: #fff !important;
+    font-size: 25px !important;
+    padding: 0 !important;
+}
+
+#load-more-btn {
+    position: relative;
+    display: inline-block;
+    width: 70px;
+    height: 34px;
+    margin: 35px auto;
+    font-size: 14px;
+    color: #ffffff;
+    text-align: center;
+    font-weight: bold;
+    line-height: 32px;
+    border-radius: 10px;
+    border: none;
+    background-color: #43a051;
+    cursor: pointer;
+    display: block;
+}

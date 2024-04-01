@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.prj.mapper.PartyReplyMapper">
+	<insert id="insert" parameterType="org.prj.domain.PartyCommentVO">
+		insert into party_comment
+		values(seq_partycomment.nextval, #{p_idx}, #{writer}, #{comment_to}, #{comment}, #{private_chk}, sysdate, sysdate)
+	</insert>
+	
+	<select id="getList" resultType="org.prj.domain.PartyCommentVO">
+		select * from party_comment where p_idx=#{p_idx} order by c_idx desc
+	</select>
+	
+	<delete id="delete" parameterType="int">
+		delete from party_comment where c_idx=#{c_idx}
+	</delete>
+	
+	<select id="getReplyList" parameterType="org.prj.domain.Criteria" resultType="org.prj.domain.PartyCommentVO">
+	<![CDATA[
+		select * from
+		(select rownum rn, c_idx, writer, reg_date, comment_to, "COMMENT", p_idx, codeone, codetwo, title, c_primary, c_secondary
+		from	
+			(select pc.c_idx, pc.writer, pc.reg_date, pc.comment_to, pc."COMMENT", pc.p_idx, pb.codeone, pb.codetwo, pb.title, pb.c_primary, pb.c_secondary
+			from party_comment pc inner join 
+			(select p.p_idx, p.codeone, p.codetwo, p.title,p.nickname, c.c_primary, c.c_secondary
+					from party_board p inner join category c 
+					on p.codeone=c.codeone and p.codetwo=c.codetwo
+					where nickname=#{comment_to}) pb
+			on pc.p_idx = pb.p_idx
+			where comment_to=#{comment_to}
+			order by reg_date desc)
+		where rownum <= #{pageNum} * #{amount})
+		where rn > (#{pageNum}-1) * #{amount}
+	]]>
+	</select>
+	
+	<select id="getReply" parameterType="int" resultType="org.prj.domain.PartyCommentVO">
+		select pc.c_idx, pc.writer, pc.reg_date, pc.comment_to, pc."COMMENT", pc.p_idx, pb.codeone, pb.codetwo, pb.title, pb.c_primary, pb.c_secondary
+		from party_comment pc inner join 
+		(select p.p_idx, p.codeone, p.codetwo, p.title,p.nickname, c.c_primary, c.c_secondary
+		        from party_board p inner join category c 
+		        on p.codeone=c.codeone and p.codetwo=c.codetwo) pb
+		on pc.p_idx = pb.p_idx
+		where c_idx=#{c_idx}
+	</select>
+	
+	<select id="getMyPartyReplyTotal" parameterType="String" resultType="int">
+		select count(*) from party_comment where comment_to=#{comment_to}
+	</select>
+	
+	<delete id="deleteParty" parameterType="int">
+		delete from party_comment where p_idx=#{p_idx}
+	</delete>
+</mapper>

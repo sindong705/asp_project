@@ -1,0 +1,155 @@
+.title-div {
+	border-bottom: 2px solid #43a051;
+}
+
+.title {
+    margin-top: 60px;
+    margin-bottom: 20px;
+    font-size: 22px;
+    color: #333333;
+    line-height: 32px;
+    font-weight: bold;
+}
+
+
+table {
+	border-spacing: 0;
+    border-collapse: collapse;
+}
+
+.list-member {
+	border-top: 1px solid #333333;
+    border-bottom: 1px solid #ececec;
+}
+
+.list-member table {
+	width: 100%;
+}
+
+.list-member table th, .list-member table td {
+	text-align: center;
+}
+
+.list-member table th {
+	padding: 19px 0;
+    font-size: 14px;
+    font-weight: bold;
+    color: #333333;
+    background-color: #f9f9f9;
+}
+
+.list-member table td {
+	padding: 28px 0 27px;
+	font-size: 14px;
+    font-weight: 500;
+    color: #333;
+    line-height: 16px;
+    border-top: 1px solid #ececec;
+}
+
+.list-member table td strong {
+	font-size: 18px;
+    font-weight: 700;
+    letter-spacing: -1px;
+}
+
+.list-member table .title-td {
+	padding-left: 50px;
+    font-size: 15px;
+    font-weight: 500;
+    color: #333333;
+    text-align: left;
+    line-height: 18px;
+}
+
+.list-member table .sub-title {
+	font-size: 13px;
+    color: #aaaaaa;
+}
+
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.mypoint-list {
+	border-top: 0;
+}
+
+/* 페이징 */
+.page-nation li{
+	list-style: none;
+}
+
+.page-wrap{
+	text-align: center;
+	font-size: 0;
+}
+.page-nation {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-top: 35px;
+}
+
+.page-nation a{
+	display: block;
+	margin: 0 3px;
+	flex: left;
+	border: 1px solid #e6e6e6;
+	border-radius: 10px;
+	width: 28px;
+	height: 28px;
+	line-height: 28px;
+	text-align: center;
+	background-color: #fff;
+	font-size: 13px;
+	color: black;
+	text-decoration: none;
+}
+.page-nation a.active{
+	background-color: #43a051;
+	color: #fff;
+}
+.page-nation a:hover{
+	background-color: #43a051;
+	color: #fff;
+}
+.come{
+	color: #43a051;
+}
+.picture {
+    display: inline-block;
+    width: 85px;
+    height: 85px;
+    vertical-align: middle;
+}
+.picture2 {
+    display: inline-block;
+    width: 50px;
+    height: 50px;
+    vertical-align: middle;
+}
+.ft20{
+	font-size: 20px;
+}
+.ft30{
+	font-size: 30px;
+}
+.ft40{
+	font-size: 40px;
+}
+.lmg20{
+	margin-left: 20px;
+}
+.lmg30{
+	margin-left: 30px;
+}
+.plusPoint{
+	color: blue !important;
+}
+.minusPoint{
+	color: red !important;
+}

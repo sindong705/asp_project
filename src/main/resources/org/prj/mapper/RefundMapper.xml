@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.prj.mapper.RefundMapper">
+	<!-- 환불 신청 -->
+	<insert id="doRefundRegister" parameterType="org.prj.domain.RefundVO">
+		INSERT INTO refund (order_no, m_idx, p_idx, r_idx, id, name, amount, re_amount, re_status, reg_date, reason)
+		VALUES (#{order_no}, #{m_idx}, #{p_idx}, seq_refund.nextval, #{id}, #{name}, #{amount}, #{re_amount}, 'A', sysdate, #{reason})
+	</insert>
+	
+	<!-- 새 환불신청 건수 -->
+	<select id="getNewRefund" resultType="int">
+		select count(*) from refund where re_status='A'
+	</select>
+	
+	<!-- 내 정보 수정 시 name 업데이트 -->
+	<update id="updateMyinfo" parameterType="org.prj.domain.MemberVO">
+		update refund set name=#{name} where m_idx=#{m_idx}
+	</update>
+	
+	<!-- 환불 관리 글 개수 -->
+	<select id="getRefundTotal" parameterType="org.prj.domain.Criteria" resultType="int">
+		select count(*) 
+		from refund
+		where 1=1
+		<choose>
+	        <when test='status.equals("A")'>
+	            and re_status = 'A'
+	        </when>
+	        <when test='status.equals("B")'>
+	            and re_status = 'B'
+	        </when>
+	        <when test='status.equals("C")'>
+	            and re_status = 'C'
+	        </when>
+	    </choose>
+		<if test='searchword != null or searchword != ""'>
+			<choose>
+		        <when test='searchcolumn.equals("id")'>
+		            and LOWER(id) LIKE '%' || #{searchword} || '%'
+		        </when>
+		        <when test='searchcolumn.equals("name")'>
+		            and LOWER(name) LIKE '%' || #{searchword} || '%'
+		        </when>
+		        <when test='searchcolumn.equals("order_no")'>
+		            and order_no LIKE '%' || #{searchword} || '%'
+		        </when>
+		        <when test='searchcolumn.equals("p_idx")'>
+		            and p_idx LIKE '%' || #{searchword} || '%'
+		        </when>
+		    </choose>
+		</if>
+	</select>
+	
+	<!-- 환불 관리 리스트 -->
+	<select id="getRefundList" parameterType="org.prj.domain.Criteria" resultType="org.prj.domain.RefundVO">
+		select * from
+		(select rownum rn, order_no, m_idx, p_idx, r_idx, id, name, amount, re_amount, re_status, reg_date, refund_date, reason, rejection
+		from
+		(select order_no, m_idx, p_idx, r_idx, id, name, amount, re_amount, re_status, reg_date, refund_date, reason, rejection
+		from refund
+		where 1=1
+		<choose>
+	        <when test='status.equals("A")'>
+	            and re_status = 'A'
+	        </when>
+	        <when test='status.equals("B")'>
+	            and re_status = 'B'
+	        </when>
+	        <when test='status.equals("C")'>
+	            and re_status = 'C'
+	        </when>
+	    </choose>
+		<if test='searchword != null or searchword != ""'>
+			<choose>
+		        <when test='searchcolumn.equals("id")'>
+		            and LOWER(id) LIKE '%' || #{searchword} || '%'
+		        </when>
+		        <when test='searchcolumn.equals("name")'>
+		            and LOWER(name) LIKE '%' || #{searchword} || '%'
+		        </when>
+		        <when test='searchcolumn.equals("order_no")'>
+		            and order_no LIKE '%' || #{searchword} || '%'
+		        </when>
+		        <when test='searchcolumn.equals("p_idx")'>
+		            and p_idx LIKE '%' || #{searchword} || '%'
+		        </when>
+		    </choose>
+		</if>
+		order by r_idx desc)
+		<![CDATA[	
+		where rownum <= #{pageNum} * #{amount})
+		where rn > (#{pageNum}-1) * #{amount}
+		]]>
+	</select>
+	
+	<!-- 환불 승인 -->
+	<update id="doRefundApproval" parameterType="org.prj.domain.RefundVO">
+		update refund set re_status='B', refund_date=sysdate where r_idx=#{r_idx}
+	</update>
+	
+	<!-- 환불 반려 -->
+	<update id="doRefundReturn" parameterType="org.prj.domain.RefundVO">
+		update refund set re_status='C', refund_date=sysdate, rejection=#{rejection} where r_idx=#{r_idx}
+	</update>
+</mapper>

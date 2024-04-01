@@ -1,0 +1,138 @@
+.page-content {
+	border: 3px solid black;
+	height: 250px;
+	overflow: auto;
+	padding: 25px 40px;
+	border: solid 1px #c8f1cbed;
+	border-radius: 20px;
+	font-size: 14px;
+}
+
+.h3 {
+	position: relative;
+	margin-top: 50px;
+	margin-bottom: 25px;
+	font-size: 22px;
+	font-weight: 500;
+	color: #333333;
+}
+
+.title-point {
+	color: #43a051;
+}
+
+.button-align.center {
+	text-align: center;
+}
+
+.button-align {
+	margin-top: 30px;
+}
+
+.button-align .button {
+	vertical-align: top;
+}
+
+.button:link, .button:visited {
+	color: white;
+	text-decoration: none;
+}
+
+.button.button-point {
+	background-color: #43a051;
+	cursor: pointer;
+}
+
+.button.button-point:hover {
+	background-color: #FFE05C;
+}
+
+.button-align {
+	position: relative;
+	min-height: 53px;
+	margin-top: 60px;
+}
+
+.form-sns-join {
+	width: 800px;
+	margin: 0 auto;
+}
+
+.form-sns-join a {
+	display: inline-block;
+	width: calc(50% - 10px);
+	height: 70px;
+	margin-left: 16px;
+	font-size: 18px;
+	font-weight: 500;
+	text-align: center;
+	line-height: 70px;
+	border-radius: 10px;
+}
+
+.form-sns-join a img {
+	position: relative;
+	top: -2px;
+	vertical-align: middle;
+}
+
+.form-sns-join a:first-child {
+	margin-left: 0;
+}
+
+.form-sns-join a.naver {
+	color: #ffffff;
+	background-color: #1fc800;
+}
+
+.form-sns-join a.kakao {
+	color: #331420;
+	background-color: #f9e000;
+}
+
+.button-align.center {
+	text-align: center;
+}
+
+.button-align .button {
+	vertical-align: top;
+}
+
+.button:link, .button:visited {
+	color: white;
+	text-decoration: none;
+}
+
+.button.button-purple {
+	background-color: #43a051;
+	cursor: pointer;
+}
+
+.button-align {
+	position: relative;
+	min-height: 53px;
+	margin-top: 15px;
+}
+
+.button {
+	position: relative;
+	display: inline-block;
+	min-width: 240px;
+	height: 70px;
+	margin: 1px 0;
+	padding: 0 10px;
+	font-size: 18px;
+	color: white;
+	text-align: center;
+	line-height: 68px;
+	border: 0;
+	border-radius: 5px;
+	background-color: #cecdd4;
+	overflow: hidden;
+}
+
+.agreeAll {
+	font-size: 20px;
+	display: flex;
+    justify-content: center;
+}

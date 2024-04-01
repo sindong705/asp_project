@@ -1,0 +1,461 @@
+/* 화면 전체 렙 */
+.wrapper {
+	width: 1000px;
+}
+/* 페이지 제목 */
+.subjecet {
+	width: 100%;
+	height: 120px;
+	background-color: #8EC0E4;
+}
+
+.subjecet span {
+	margin-left: 31px;
+	font-size: 80px;
+	font-weight: 900;
+	color: white;
+}
+
+
+
+
+/* 비밀번호 정규식 불일치 */
+.pw_input_3 {
+	color: black;
+	display: none;
+}
+
+/* 비밀번호 영역 */
+.pw_wrap {
+	width: 100%;
+	margin-top: 20px;
+}
+
+.pw_name {
+	font-size: 25px;
+	font-weight: bold;
+}
+
+.pw_input_box {
+	border: 1px solid black;
+	height: 31px;
+	padding: 10px 14px;
+}
+
+.pw_input {
+	width: 100%;
+	height: 100%;
+	border: none;
+	font-size: 28px;
+}
+
+/* 비밀번호 일치하지 않는 경우 */
+.form-list .lightgrey.pw_input_1 {
+	color: blue;
+	display: none;
+}
+/* 비밀번호 일치하는 경우 */
+.form-list .lightgrey.pw_input_2 {
+	color: red;
+	display: none;
+}
+
+.form-list .lightgrey.input_red {
+	color: red;
+}
+
+.form-list .lightgrey.input_blue {
+	color: blue;
+}
+/* 비밀번호 확인 영역 */
+.pwck_wrap {
+	width: 100%;
+	margin-top: 20px;
+}
+
+.pwck_name {
+	font-size: 25px;
+	font-weight: bold;
+}
+
+.pwck_input_box {
+	border: 1px solid black;
+	height: 31px;
+	padding: 10px 14px;
+}
+
+.pwck_input {
+	width: 100%;
+	height: 100%;
+	border: none;
+	font-size: 28px;
+}
+
+/* 이름 영역 */
+.user_wrap {
+	width: 100%;
+	margin-top: 20px;
+}
+
+.user_name {
+	font-size: 25px;
+	font-weight: bold;
+}
+
+.user_input_box {
+	border: 1px solid black;
+	height: 31px;
+	padding: 10px 14px;
+}
+
+.user_input {
+	width: 100%;
+	height: 100%;
+	border: none;
+	font-size: 28px;
+}
+
+/* 닉네임 영역 */
+.nickname_wrap {
+	width: 100%;
+	margin-top: 20px;
+}
+
+.nickname_name {
+	font-size: 25px;
+	font-weight: bold;
+}
+
+.nickname_input_box {
+	border: 1px solid black;
+	height: 31px;
+	padding: 10px 14px;
+}
+
+.nickname_input {
+	width: 100%;
+	height: 100%;
+	border: none;
+	font-size: 28px;
+}
+
+/* 닉네임 정규식 불일치 */
+.nickname_input_1 {
+	color: black;
+	display: none;
+}
+
+/* 휴대폰 영역 */
+.phone_wrap {
+	width: 100%;
+	margin-top: 20px;
+}
+
+.phone_name {
+	font-size: 25px;
+	font-weight: bold;
+}
+
+.phone_input_box {
+	border: 1px solid black;
+	height: 31px;
+	padding: 10px 14px;
+	width: 61%;
+	float: left;
+}
+
+.phone_input {
+	width: 100%;
+	height: 100%;
+	border: none;
+	font-size: 28px;
+}
+
+.phone_check_wrap {
+	margin-top: 20px;
+}
+
+.phone_check_button {
+	border: 1px solid black;
+	height: 51px;
+	width: 30%;
+	float: right;
+	line-height: 50px;
+	text-align: center;
+	font-size: 30px;
+	font-weight: 900;
+	background-color: #ececf7;
+	cursor: pointer;
+}
+/* 메일 영역 */
+.email_wrap {
+	width: 100%;
+	margin-top: 20px;
+}
+
+.email_name {
+	font-size: 25px;
+	font-weight: bold;
+}
+
+.email_input_box {
+	border: 1px solid black;
+	height: 31px;
+	padding: 10px 14px;
+}
+
+.email_input {
+	width: 100%;
+	height: 100%;
+	border: none;
+	font-size: 28px;
+}
+
+/* 중복 이메일 존재하지 않는 경우 */
+.form-list .lightgrey.email_input_1 {
+	color: blue;
+	display: none;
+}
+/* 중복 이메일 존재하는 경우 */
+.form-list .lightgrey.email_input_2 {
+	color: red;
+	display: none;
+}
+
+/* 가입하기 버튼 */
+.join_button_wrap {
+	margin-top: 40px;
+	text-align: center;
+}
+
+.join_button {
+	width: 100%;
+	height: 80px;
+	background-color: #6AAFE6;
+	font-size: 40px;
+	font-weight: 900;
+	color: white;
+}
+
+/* float 속성 해제 */
+.clearfix {
+	clear: both;
+}
+
+.mg-top-minus {
+	margin-top: -50px !important;
+}
+
+.mw-800 {
+	max-width: 800px;
+	margin: 0 auto;
+}
+
+* {
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box
+}
+
+.h3 {
+	position: relative;
+	margin-top: 50px;
+	margin-bottom: 20px;
+	font-size: 22px;
+	font-weight: 500;
+	color: #333333;
+}
+
+.title-point {
+	color: #43a051;
+}
+
+.form-round {
+	padding: 10px 15px;
+	border-radius: 10px;
+}
+
+.form-round {
+	position: relative;
+	padding: 25px 40px;
+	border: solid 1px #ade2b7;
+	border-radius: 20px;
+}
+
+ul {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.form-list li {
+	position: relative;
+	min-height: 42px;
+	padding: 5px 0 2px 155px;
+	font-size: 16px;
+	color: #333333;
+}
+
+.form-list li:first-child {
+	padding: 0 0 2px 155px;
+}
+
+.form-list .subject {
+	width: 160px;
+	padding: 6px 0;
+}
+
+.form-list .subject {
+	position: absolute;
+	top: 10;
+	left: 0;
+	display: inline-block;
+	width: 160px;
+	padding: 10px 0;
+}
+
+
+.form-list input[type='text'], .form-list input[type='password'] {
+	width: 230px;
+	height: 40px;
+	margin-right: 10px;
+	vertical-align: middle;
+	padding: 0 15px;
+	font-size: 14px;
+	color: #333;
+	border: solid 1px #dddddd;
+	background-color: white;
+	outline: none;
+}
+.modify-form input:read-only {background-color: #f0f0f0 !important;}  
+
+.form-list .inline-break {
+	display: block;
+	margin: 6px 0 6px 0;
+}
+
+.button-align.center {
+	text-align: center;
+}
+
+.button-align .button {
+	vertical-align: top;
+}
+
+.button:link, .button:visited {
+	color: white;
+	text-decoration: none;
+}
+
+.button.button-point {
+	background-color: #43a051;
+	cursor: pointer;
+}
+
+.button.button-point:hover {
+	background-color: #FFE05C;
+}
+
+.button-align {
+	position: relative;
+	min-height: 53px;
+	margin-top: 60px;
+}
+
+.button {
+	position: relative;
+	display: inline-block;
+	min-width: 240px;
+	height: 70px;
+	margin: 1px 0;
+	padding: 0 10px;
+	font-size: 18px;
+	color: white;
+	text-align: center;
+	line-height: 68px;
+	border: 0;
+	border-radius: 5px;
+	background-color: #cecdd4;
+	overflow: hidden;
+}
+
+.form-list .button {
+	vertical-align: middle;
+}
+
+.button.round {
+	min-width: auto;
+	padding: 0 16px;
+	height: 32px;
+	font-size: 14px;
+	line-height: 30px;
+	border-radius: 17px;
+}
+
+.button.button-purple {
+	background-color: #43a051;
+	cursor: pointer;
+}
+
+.form-list .lightgrey {
+	margin: 6px 0 6px 0;
+	font-size: 14px;
+    line-height: 16px;
+    color: #888;
+}
+
+/* SNS LOGIN */
+.login-sns{padding-bottom:10px;margin-top:5px;border: 1px solid #ddd; clear:both; background:#fff; text-align:center; }
+.login-sns .sns-head { font-size:12px; padding:0; margin:0; padding:10px 0;text-align:center;color:#888;font-weight:normal}
+.sns-icon {display:inline-block;vertical-align:middle;text-decoration:none}
+.sns-icon:hover {text-decoration:none}
+.sns-icon .ico {display:block;vertical-align:middle}
+/*.sns-icon .txt {position:absolute;line-height:0;font-size:0;vertical-align:middle;overflow:hidden}*/
+.sns-icon .txt i {font-style:normal}
+
+#fregisterform .form_01 .reg-form {margin-bottom:20px}
+#fregisterform .form_01 .reg-form .sns-wrap {margin:10px 0 0;text-align:left}
+.reg-form .sns-icon {display:inline-block;vertical-align:middle;text-decoration:none;border-width:1px;border-style:solid;overflow:hidden;margin:0 1px}
+.reg-form .sns-icon:hover {text-decoration:none}
+.reg-form .sns-icon .ico {display:block;background:url('./../../images/sns_logo.png') no-repeat;vertical-align:middle;width:24px;height:24px}
+.reg-form .sns-icon-not .ico {display:block;background:url('./../../images/sns_logo_not.png') no-repeat;vertical-align:middle}
+.reg-form .sns-icon .txt {position:absolute;line-height:0;font-size:0;vertical-align:middle;overflow:hidden}
+.reg-form .sns-icon .txt i {font-style:normal}
+
+.sns-wrap-reg .sns-naver {border-color:#18a400;background:#2db400}
+.sns-wrap-reg .sns-naver .ico {background-position:-29px 0; }
+.sns-wrap-reg .sns-google {border-color:#ca2c19;background:#dd5443}
+.sns-wrap-reg .sns-google .ico {background-position:-58px 0}
+.sns-wrap-reg .sns-facebook {border-color:#2e5393;background:#3a5897}
+.sns-wrap-reg .sns-facebook .ico {background-position:0 0 }
+
+.sns-wrap-reg .sns-icon {border-color:#dcdcdc}
+.sns-wrap-reg .sns-icon-not {border-color:#8b8b8b}
+.sns-wrap-reg .sns-naver{border-color:#18a400;}
+.sns-wrap-reg .sns-naver .ico {background-position:-29px 0; }
+.sns-wrap-reg .sns-google .ico {background-position:-58px 0}
+.sns-wrap-reg .sns-google {border-color:#ca2c19}
+.sns-wrap-reg .sns-facebook .ico {background-position:0 0 }
+.sns-wrap-reg .sns-facebook {border-color:#2e5393}
+.sns-wrap-reg .sns-kakao .ico {background-position: -87px 0;}
+.sns-wrap-reg .sns-twitter {border-color:#488FC9}
+.sns-wrap-reg .sns-twitter .ico {background-position:-145px 0}
+.sns-wrap-reg .sns-payco {border-color:#C44646}
+.sns-wrap-reg .sns-payco .ico {background-position:-116px 0}
+.sns-wrap-reg .sns-kakao {border-color:#f2df00}
+
+/* SNS by COLOR */
+.sns-wrap-over .sns-naver{background:url('./img/sns_naver_s.png') no-repeat}
+.sns-wrap-over .sns-google {background:url('./img/sns_gp_s.png') no-repeat}
+.sns-wrap-over .sns-facebook {background:url('./img/sns_fb_s.png') no-repeat}
+.sns-wrap-over .sns-twitter {background:url('./img/sns_twitter_s.png') no-repeat}
+.sns-wrap-over .sns-payco {background:url('./img/sns_payco_s.png') no-repeat}
+.sns-wrap-over .sns-kakao {background:url('./img/sns_kakao_s.png') no-repeat}
+.reg-form .sns-icon-not {border-color:#8b8b8b;}
+
+.social-login-loading{width:100%;height:auto;text-align:center}
+.social-login-loading p{display:inline-block;margin-top:10px;padding:40px 0 0;line-height:30px}
+
+
+
+

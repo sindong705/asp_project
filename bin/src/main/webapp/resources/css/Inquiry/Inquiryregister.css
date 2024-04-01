@@ -1,0 +1,167 @@
+.subjecet {
+	width: 100%;
+	height: 120px;
+	background-color: #8EC0E4;
+}
+
+.mw-800 {
+	max-width: 800px;
+	margin: 0 auto;
+}
+
+.h3 {
+	position: relative;
+	margin-top: 50px;
+	margin-bottom: 20px;
+	font-size: 22px;
+	font-weight: 500;
+	color: #333333;
+}
+
+.form-round {
+	position: relative;
+	padding: 25px 40px;
+	border: solid 1px #ade2b7;
+	border-radius: 20px;
+}
+
+ul {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.form-list li {
+	position: relative;
+	min-height: 42px;
+	padding: 5px 0 2px 155px;
+	font-size: 16px;
+	color: #333333;
+}
+
+.form-list li:first-child {
+	padding: 10px 0 2px 155px;
+}
+
+.form-list .subject {
+	width: 160px;
+	padding: 6px 0;
+}
+
+.form-list .subject {
+	position: absolute;
+	top: 10;
+	left: 0;
+	display: inline-block;
+	width: 160px;
+	padding: 10px 0;
+}
+
+.form-list input[type='text'], .form-list select {
+	width: 100%;
+	height: 40px;
+	padding: 0 15px;
+	font-size: 14px;
+	color: #333;
+	border: solid 1px #dddddd;
+	background-color: white;
+	outline: none;
+}
+
+.form-list textarea {
+	width: 100%;
+	vertical-align: middle;
+	padding: 10px 15px;
+	margin-top: 10px;
+	font-size: 14px;
+	color: #333;
+	border: solid 1px #dddddd;
+	background-color: white;
+	outline: none;
+}
+
+.form-list input[type="file"] {
+	margin-right: 10px;
+	padding: 12px 0;
+}
+
+.form-list .inline-break {
+	display: block;
+	margin: 6px 0 6px 0;
+}
+
+.button:link, .button:visited {
+	color: white;
+	text-decoration: none;
+}
+
+.uploadResult ul li {
+	padding: 0 !important;
+}
+
+.button.button-point {
+	background-color: #43a051;
+	cursor: pointer;
+}
+
+.button.button-point:hover {
+	background-color: #FFE05C;
+}
+
+.button {
+	position: relative;
+	display: inline-block;
+	min-width: 240px;
+	height: 70px;
+	margin: 1px 0;
+	padding: 0 10px;
+	font-size: 18px;
+	color: white;
+	text-align: center;
+	line-height: 68px;
+	border: 0;
+	border-radius: 5px;
+	background-color: #cecdd4;
+	overflow: hidden;
+	cursor: pointer;
+}
+
+.form-list .button {
+	vertical-align: middle;
+}
+
+/* 개인정보 동의 영역*/
+.page-content {
+	border: 3px solid black;
+	height: 250px;
+	overflow: auto;
+	padding: 25px 40px;
+	border: solid 1px #c8f1cbed;
+	border-radius: 20px;
+	font-size: 14px;
+}
+
+.h3 {
+	position: relative;
+	margin-top: 50px;
+	margin-bottom: 25px;
+	font-size: 22px;
+	font-weight: 500;
+	color: #333333;
+}
+
+.title-point {
+	color: #43a051;
+}
+
+.agreeAll {
+	font-size: 20px;
+	display: flex;
+	justify-content: center;
+}
+
+.check-box {
+	width: 100%;
+	text-align: center;
+	margin: 20px 0;
+}
